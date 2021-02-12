@@ -1,0 +1,40 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5
+    container_name: snipe_mysql
+    restart: always
+    volumes:
+      - /Users/andrew/Projects/snipe-it/localdata/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=snipemysqlrootpassword
+      - MYSQL_USER=snipe
+      - MYSQL_PASSWORD=snipemysqlpassword
+      - MYSQL_DATABASE=snipe
+  snipeit:
+    image: linuxserver/snipe-it:version-v5.0.12
+    container_name: snipe-it
+    restart: always
+    depends_on:
+      - mysql
+    volumes:
+      - /Users/andrew/Projects/snipe-it/localdata/config:/config
+    environment:
+      - APP_URL=localhost:8080
+      - APP_DEBUG=false
+      - MYSQL_PORT_3306_TCP_ADDR=mysql
+      - MYSQL_PORT_3306_TCP_PORT=3306
+      - MYSQL_DATABASE=snipe
+      - MYSQL_USER=snipe
+      - MYSQL_PASSWORD=snipemysqlpassword
+      - MAIL_ENV_FROM_ADDR=
+      - MAIL_ENV_FROM_NAME=BIM Twin
+      - MAIL_ENV_ENCRYPTION=tls
+      - MAIL_PORT_587_TCP_ADDR=
+      - MAIL_PORT_587_TCP_PORT=587
+      - MAIL_ENV_USERNAME=
+      - MAIL_ENV_PASSWORD=
+      - PGID=1000
+      - PUID=1000
+    ports:
+      - "8080:80"
