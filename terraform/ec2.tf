@@ -1,16 +1,16 @@
-resource "aws_subnet" "ubuntu-subnet" {
-  cidr_block        = cidrsubnet(aws_vpc.ubuntu-vpc.cidr_block, 3, 1)
-  vpc_id            = aws_vpc.ubuntu-vpc.id
+resource "aws_subnet" "bimtwin-snipe-bastion-subnet" {
+  cidr_block        = cidrsubnet(aws_vpc.bimtwin-snipe-vpc.cidr_block, 3, 1)
+  vpc_id            = aws_vpc.bimtwin-snipe-vpc.id
   availability_zone = "${local.region}a"
   tags              = local.tags
 }
 
-resource "aws_route_table_association" "ubuntu-route-table-subnet-association" {
-  subnet_id      = aws_subnet.ubuntu-subnet.id
-  route_table_id = aws_route_table.ubuntu-route-table.id
+resource "aws_route_table_association" "bimtwin-snipe-bastion-route-table-subnet-association" {
+  subnet_id      = aws_subnet.bimtwin-snipe-bastion-subnet.id
+  route_table_id = aws_route_table.bimtwin-snipe-route-table.id
 }
 
-data "aws_ami" "ubuntu-ami" {
+data "aws_ami" "bimtwin-snipe-bastion-ami" {
   most_recent = true
   owners      = ["679593333241"]
 
@@ -25,11 +25,11 @@ data "aws_ami" "ubuntu-ami" {
   }
 }
 
-resource "aws_security_group" "ubuntu-ingress" {
-  name        = "ubuntu-security-group"
+resource "aws_security_group" "bimtwin-snipe-bastion-ingress" {
+  name        = "bimtwin-snipe-bastion-security-group"
   description = "Allow HTTP, HTTPS and SSH traffic from anywhere"
 
-  vpc_id = aws_vpc.ubuntu-vpc.id
+  vpc_id = aws_vpc.bimtwin-snipe-vpc.id
 
   ingress {
     description = "SSH"
@@ -65,13 +65,13 @@ resource "aws_security_group" "ubuntu-ingress" {
   tags = local.tags
 }
 
-resource "aws_instance" "ubuntu-instance" {
+resource "aws_instance" "bimtwin-snipe-bastion-instance" {
   key_name      = aws_key_pair.AndrewCurveMacBook2020RSA.key_name
-  ami           = data.aws_ami.ubuntu-ami.id
+  ami           = data.aws_ami.bimtwin-snipe-bastion-ami.id
   instance_type = "t3.micro"
-  subnet_id     = aws_subnet.ubuntu-subnet.id
+  subnet_id     = aws_subnet.bimtwin-snipe-bastion-subnet.id
 
-  vpc_security_group_ids = [aws_security_group.ubuntu-ingress.id]
+  vpc_security_group_ids = [aws_security_group.bimtwin-snipe-bastion-ingress.id]
 
   connection {
     type        = "ssh"
@@ -83,13 +83,13 @@ resource "aws_instance" "ubuntu-instance" {
   tags = local.tags
 }
 
-resource "aws_eip" "ubuntu-eip" {
+resource "aws_eip" "bimtwin-snipe-bastion-eip" {
   vpc      = true
-  instance = aws_instance.ubuntu-instance.id
+  instance = aws_instance.bimtwin-snipe-bastion-instance.id
 
   tags = local.tags
 }
 
 output "instance_eip_dns_addr" {
-  value = aws_eip.ubuntu-eip.public_dns
+  value = aws_eip.bimtwin-snipe-bastion-eip.public_dns
 }

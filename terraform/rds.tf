@@ -1,8 +1,8 @@
-resource "aws_security_group" "snipe-db-ingress" {
-  name        = "snipe-db-security-group"
+resource "aws_security_group" "bimtwin-snipe-db-ingress" {
+  name        = "bimtwin-snipe-db-security-group"
   description = "Allow HTTP, HTTPS and MySQL traffic from anywhere"
 
-  vpc_id = aws_vpc.ubuntu-vpc.id
+  vpc_id = aws_vpc.bimtwin-snipe-vpc.id
 
   ingress {
     description = "MySQL"
@@ -38,40 +38,39 @@ resource "aws_security_group" "snipe-db-ingress" {
   tags = local.tags
 }
 
-resource "aws_subnet" "snipe-db-subnet-one" {
-  cidr_block        = cidrsubnet(aws_vpc.ubuntu-vpc.cidr_block, 3, 2)
-  vpc_id            = aws_vpc.ubuntu-vpc.id
+resource "aws_subnet" "bimtwin-snipe-db-subnet-one" {
+  cidr_block        = cidrsubnet(aws_vpc.bimtwin-snipe-vpc.cidr_block, 3, 2)
+  vpc_id            = aws_vpc.bimtwin-snipe-vpc.id
   availability_zone = "${local.region}a"
   tags              = local.tags
 }
 
-resource "aws_subnet" "snipe-db-subnet-two" {
-  cidr_block        = cidrsubnet(aws_vpc.ubuntu-vpc.cidr_block, 3, 3)
-  vpc_id            = aws_vpc.ubuntu-vpc.id
+resource "aws_subnet" "bimtwin-snipe-db-subnet-two" {
+  cidr_block        = cidrsubnet(aws_vpc.bimtwin-snipe-vpc.cidr_block, 3, 3)
+  vpc_id            = aws_vpc.bimtwin-snipe-vpc.id
   availability_zone = "${local.region}b"
   tags              = local.tags
 }
 
-resource "aws_route_table_association" "snipe-db-subnet-one-route-table-association" {
-  subnet_id      = aws_subnet.snipe-db-subnet-one.id
-  route_table_id = aws_route_table.ubuntu-route-table.id
+resource "aws_route_table_association" "bimtwin-snipe-db-subnet-one-route-table-association" {
+  subnet_id      = aws_subnet.bimtwin-snipe-db-subnet-one.id
+  route_table_id = aws_route_table.bimtwin-snipe-route-table.id
 }
 
-resource "aws_route_table_association" "snipe-db-subnet-two-route-table-association" {
-  subnet_id      = aws_subnet.snipe-db-subnet-two.id
-  route_table_id = aws_route_table.ubuntu-route-table.id
+resource "aws_route_table_association" "bimtwin-snipe-db-subnet-two-route-table-association" {
+  subnet_id      = aws_subnet.bimtwin-snipe-db-subnet-two.id
+  route_table_id = aws_route_table.bimtwin-snipe-route-table.id
 }
 
-resource "aws_db_subnet_group" "snipe-db-subnet-group" {
+resource "aws_db_subnet_group" "bimtwin-snipe-db-subnet-group" {
   name       = "${local.name}-subnet-group"
-  subnet_ids = [aws_subnet.snipe-db-subnet-one.id, aws_subnet.snipe-db-subnet-two.id]
+  subnet_ids = [aws_subnet.bimtwin-snipe-db-subnet-one.id, aws_subnet.bimtwin-snipe-db-subnet-two.id]
 
   tags = local.tags
 }
 
-resource "aws_rds_cluster" "snipe-db-cluster" {
-  cluster_identifier     = "snipe-db-cluster"
-  availability_zones     = ["${local.region}a", "${local.region}b", "${local.region}c"]
+resource "aws_rds_cluster" "bimtwin-snipe-db-cluster" {
+  cluster_identifier     = "bimtwin-snipe-db-cluster"
   engine                 = "aurora-mysql"
   engine_mode            = "serverless"
   engine_version         = "5.7.mysql_aurora.2.07.1"
@@ -81,22 +80,22 @@ resource "aws_rds_cluster" "snipe-db-cluster" {
   master_password        = local.db_password
   enable_http_endpoint   = true
   skip_final_snapshot    = true
-  db_subnet_group_name   = aws_db_subnet_group.snipe-db-subnet-group.name
-  vpc_security_group_ids = [aws_security_group.snipe-db-ingress.id]
+  db_subnet_group_name   = aws_db_subnet_group.bimtwin-snipe-db-subnet-group.name
+  vpc_security_group_ids = [aws_security_group.bimtwin-snipe-db-ingress.id]
   scaling_configuration {
     min_capacity = 2
   }
 }
 
-output "snipe_db_endpoint" {
-  value = aws_rds_cluster.snipe-db-cluster.endpoint
+output "bimtwin-snipe_db_endpoint" {
+  value = aws_rds_cluster.bimtwin-snipe-db-cluster.endpoint
 }
-output "snipe_db_username" {
-  value = aws_rds_cluster.snipe-db-cluster.master_username
+output "bimtwin-snipe_db_username" {
+  value = aws_rds_cluster.bimtwin-snipe-db-cluster.master_username
 }
-output "snipe_db_password" {
-  value = aws_rds_cluster.snipe-db-cluster.master_password
+output "bimtwin-snipe_db_password" {
+  value = aws_rds_cluster.bimtwin-snipe-db-cluster.master_password
 }
-output "snipe_db_port" {
-  value = aws_rds_cluster.snipe-db-cluster.port
+output "bimtwin-snipe_db_port" {
+  value = aws_rds_cluster.bimtwin-snipe-db-cluster.port
 }
