@@ -145,25 +145,6 @@ resource "aws_instance" "ubuntu-instance" {
     host        = self.public_ip
   }
 
-  credit_specification {
-    cpu_credits = "unlimited"
-  }
-
-  ebs_block_device {
-    delete_on_termination = true
-    device_name           = "/dev/sda1"
-    encrypted             = false
-    tags                  = {}
-    volume_size           = 30
-    volume_type           = "gp2"
-  }
-
-  root_block_device {
-    delete_on_termination = true
-    encrypted             = false
-    tags                  = {}
-  }
-
   tags = local.tags
 }
 
@@ -248,7 +229,7 @@ resource "aws_db_subnet_group" "snipe-db-subnet-group" {
 
 resource "aws_rds_cluster" "snipe-db-cluster" {
   cluster_identifier     = "snipe-db-cluster"
-  availability_zones     = ["${local.region}a", "${local.region}b"]
+  availability_zones     = ["${local.region}a", "${local.region}b", "${local.region}c"]
   engine                 = "aurora-mysql"
   engine_mode            = "serverless"
   engine_version         = "5.7.mysql_aurora.2.07.1"
@@ -260,12 +241,11 @@ resource "aws_rds_cluster" "snipe-db-cluster" {
   skip_final_snapshot    = true
   db_subnet_group_name   = aws_db_subnet_group.snipe-db-subnet-group.name
   vpc_security_group_ids = [aws_security_group.snipe-db-ingress.id]
+  scaling_configuration {
+    min_capacity = 2
+  }
 }
 
-
-output "instance_dns_addr" {
-  value = aws_instance.ubuntu-instance.public_dns
-}
 output "instance_eip_dns_addr" {
   value = aws_eip.ubuntu-eip.public_dns
 }
