@@ -5,6 +5,13 @@ resource "aws_subnet" "bimtwin-snipe-bastion-subnet" {
   tags              = local.tags
 }
 
+resource "aws_subnet" "bimtwin-snipe-bastion-subnet-two" {
+  cidr_block        = cidrsubnet(aws_vpc.bimtwin-snipe-vpc.cidr_block, 4, 1)
+  vpc_id            = aws_vpc.bimtwin-snipe-vpc.id
+  availability_zone = "${local.region}b"
+  tags              = local.tags
+}
+
 resource "aws_route_table_association" "bimtwin-snipe-bastion-route-table-subnet-association" {
   subnet_id      = aws_subnet.bimtwin-snipe-bastion-subnet.id
   route_table_id = aws_route_table.bimtwin-snipe-route-table.id
@@ -55,6 +62,14 @@ resource "aws_security_group" "bimtwin-snipe-bastion-ingress" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "HTTPTHREE"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -92,4 +107,16 @@ resource "aws_eip" "bimtwin-snipe-bastion-eip" {
 
 output "instance_eip_dns_addr" {
   value = aws_eip.bimtwin-snipe-bastion-eip.public_dns
+}
+
+resource "aws_route53_record" "bimtwin-snipe-bastion-dns" {
+  zone_id = data.aws_route53_zone.bimtwin-route53-zone.id
+  name    = "bastion.bimtwin.ml"
+  type    = "CNAME"
+  ttl     = "5"
+  records = [aws_eip.bimtwin-snipe-bastion-eip.public_dns]
+}
+
+output "bimtwin-snipe-bastion-dns-url" {
+  value = "http://bastion.bimtwin.ml"
 }
