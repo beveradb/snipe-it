@@ -1,3 +1,5 @@
+# If we put the docker image reference in here, it'll try to pull from docker hub (but then ECS will need internet)
+# If we leave it blank, it'll try to pull from the private ECR repository, so push to there from your local machine!
 locals {
   repository_url = "beveradb/sun-api"
 }

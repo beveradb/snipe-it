@@ -44,26 +44,3 @@ resource "aws_route_table_association" "rds-subnet-two-route-table-association" 
   subnet_id      = aws_subnet.rds-subnet-two.id
   route_table_id = aws_route_table.route-table.id
 }
-
-resource "aws_subnet" "ecs-subnet-private" {
-  cidr_block        = cidrsubnet(aws_vpc.vpc.cidr_block, 3, 5)
-  vpc_id            = aws_vpc.vpc.id
-  availability_zone = "${var.region}a"
-  tags              = var.tags
-}
-resource "aws_subnet" "ecs-subnet-public" {
-  cidr_block        = cidrsubnet(aws_vpc.vpc.cidr_block, 3, 6)
-  vpc_id            = aws_vpc.vpc.id
-  availability_zone = "${var.region}b"
-  tags              = var.tags
-}
-
-resource "aws_route_table_association" "ecs-subnet-private-route-table-association" {
-  subnet_id      = aws_subnet.ecs-subnet-private.id
-  route_table_id = aws_route_table.route-table.id
-}
-
-resource "aws_route_table_association" "ecs-subnet-public-route-table-association" {
-  subnet_id      = aws_subnet.ecs-subnet-public.id
-  route_table_id = aws_route_table.route-table.id
-}
