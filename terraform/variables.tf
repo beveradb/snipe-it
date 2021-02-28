@@ -14,6 +14,18 @@ variable "primary_domain" {
   type    = string
   default = "bimtwin.ml"
 }
+variable "docker_image" {
+  type    = string
+  default = "linuxserver/snipe-it"
+}
+variable "docker_image_version" {
+  type    = string
+  default = "version-v5.0.12"
+}
+variable "container_port" {
+  type    = number
+  default = 80
+}
 variable "db_name" {
   type    = string
   default = "snipe"

@@ -1,9 +1,3 @@
-# If we put the docker image reference in here, it'll try to pull from docker hub (but then ECS will need internet)
-# If we leave it blank, it'll try to pull from the private ECR repository, so push to there from your local machine!
-locals {
-  repository_url = "beveradb/sun-api"
-}
-
 # We need a cluster in which to put our service.
 resource "aws_ecs_cluster" "ecs-cluster" {
   name = "${var.project_name}-ecs"
@@ -28,10 +22,16 @@ resource "aws_ecs_service" "ecs-service" {
 
   desired_count = 1
 
+  # If your service's tasks take a while to start and respond to Elastic Load Balancing health checks,
+  # you can specify a health check grace period of up to 7,200 seconds. This grace period can prevent
+  # the service scheduler from marking tasks as unhealthy and stopping them before they have time to come up.
+  # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-create-loadbalancer-rolling.html
+  health_check_grace_period_seconds = var.container_health_check_grace_period_seconds
+
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs-alb-tg.arn
     container_name   = var.project_name
-    container_port   = "3000"
+    container_port   = var.container_port
   }
 
   network_configuration {
@@ -40,6 +40,8 @@ resource "aws_ecs_service" "ecs-service" {
     security_groups = [
       var.security_group_ids.egress-all,
       var.security_group_ids.ingress-api,
+      var.security_group_ids.ingress-http,
+      var.security_group_ids.ingress-https,
     ]
 
     subnets = [
@@ -61,12 +63,13 @@ resource "aws_ecs_task_definition" "ecs-task" {
   [
     {
       "name": "${var.project_name}",
-      "image": "${local.repository_url == "" ? aws_ecr_repository.ecr.repository_url : local.repository_url}:latest",
+      "image": "${var.docker_image == "" ? aws_ecr_repository.ecr.repository_url : var.docker_image}:${var.docker_image_version}",
       "portMappings": [
         {
-          "containerPort": 3000
+          "containerPort": ${var.container_port}
         }
       ],
+      ${var.container_env_vars_config}
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -83,8 +86,8 @@ EOF
   execution_role_arn = aws_iam_role.ecs-task-execution-role.arn
 
   # These are the minimum values for Fargate containers.
-  cpu                      = 256
-  memory                   = 512
+  cpu                      = 1024
+  memory                   = "2GB"
   requires_compatibilities = ["FARGATE"]
 
   # This is required for Fargate containers (more on this later).
@@ -171,7 +174,7 @@ resource "aws_alb_listener" "ecs-alb-listener-https" {
 
 resource "aws_lb_target_group" "ecs-alb-tg" {
   name        = "${var.project_name}-ecs-alb-tg"
-  port        = 3000
+  port        = var.container_port
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = var.vpc_id
@@ -190,4 +193,16 @@ resource "aws_route53_record" "ecs-lb-subdomain-dns" {
   type    = "CNAME"
   ttl     = "5"
   records = [aws_alb.ecs-alb.dns_name]
+}
+
+resource "aws_route53_record" "ecs-lb-primary-dns" {
+  zone_id = var.route53_zone_id
+  name    = var.domain
+  type    = "A"
+
+  alias {
+    name                   = aws_alb.ecs-alb.dns_name
+    zone_id                = aws_alb.ecs-alb.zone_id
+    evaluate_target_health = true
+  }
 }
