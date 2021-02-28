@@ -133,8 +133,8 @@ resource "aws_alb" "ecs-alb" {
   load_balancer_type = "application"
 
   subnets = [
-    var.subnet_ids.ecs-subnet-private,
-    var.subnet_ids.ecs-subnet-public
+    var.subnet_ids.ecs-subnet-public-one,
+    var.subnet_ids.ecs-subnet-public-two,
   ]
 
   security_groups = [
