@@ -7,13 +7,9 @@ services:
     volumes:
       - /home/ubuntu/snipe/config:/config
     environment:
-      - APP_URL="http://bastionlb.bimtwin.ml"
       - APP_DEBUG=false
-      - MYSQL_PORT_3306_TCP_ADDR=<address-from-terraform-output>
       - MYSQL_PORT_3306_TCP_PORT=3306
       - MYSQL_DATABASE=snipe
-      - MYSQL_USER=<username-from-terraform-output>
-      - MYSQL_PASSWORD=<password-from-terraform-output>
       - MAIL_ENV_FROM_ADDR=
       - MAIL_ENV_FROM_NAME=BIM Twin
       - MAIL_ENV_ENCRYPTION=tls
@@ -23,5 +19,9 @@ services:
       - MAIL_ENV_PASSWORD=
       - PGID=1000
       - PUID=1000
+      - APP_URL="http://bastionlb.bimtwin.ml"
+      - MYSQL_PORT_3306_TCP_ADDR=<address-from-terraform-output>
+      - MYSQL_USER=<username-from-terraform-output>
+      - MYSQL_PASSWORD=<password-from-terraform-output>
     ports:
       - "80:80"
