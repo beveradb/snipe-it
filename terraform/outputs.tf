@@ -2,22 +2,6 @@ output "vpc_id" {
   value = module.vpc.vpc_id
 }
 
-output "bastion_eip_dns_addr" {
-  value = module.ec2.bastion_alb_dns_addr
-}
-
-output "bastion_subdomain_url" {
-  value = module.ec2.bastion_subdomain_url
-}
-
-output "bastion_alb_dns_addr" {
-  value = module.ec2.bastion_alb_dns_addr
-}
-
-output "bastion_lb_subdomain_url" {
-  value = module.ec2.bastion_lb_subdomain_url
-}
-
 output "db_endpoint" {
   value = module.rds.db_endpoint
 }

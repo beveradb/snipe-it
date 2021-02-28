@@ -87,7 +87,7 @@ EOF
 
   # These are the minimum values for Fargate containers.
   cpu                      = 1024
-  memory                   = "2GB"
+  memory                   = 2048
   requires_compatibilities = ["FARGATE"]
 
   # This is required for Fargate containers (more on this later).

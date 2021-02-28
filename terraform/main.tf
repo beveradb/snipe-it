@@ -19,27 +19,9 @@ module "vpc" {
   primary_domain = var.primary_domain
 }
 
-module "ec2" {
-  source     = "./modules/ec2"
-  depends_on = [module.vpc]
-
-  tags               = var.tags
-  region             = var.region
-  project_name       = var.project_name
-  domain             = var.primary_domain
-  ec2_ssh_key_name   = var.ec2_ssh_key_name
-  ec2_ssh_public_key = var.ec2_ssh_public_key
-
-  vpc_id             = module.vpc.vpc_id
-  route53_zone_id    = module.vpc.route53_zone_id
-  acm_cert_arn       = module.vpc.acm_cert_arn
-  subnet_ids         = module.vpc.subnet_ids
-  security_group_ids = module.vpc.security_group_ids
-}
-
 module "rds" {
   source     = "./modules/rds"
-  depends_on = [module.vpc, module.ec2]
+  depends_on = [module.vpc]
 
   tags         = var.tags
   db_name      = var.db_name
@@ -51,7 +33,7 @@ module "rds" {
 
 module "ecs" {
   source     = "./modules/ecs"
-  depends_on = [module.vpc, module.ec2, module.rds]
+  depends_on = [module.vpc, module.rds]
 
   tags           = var.tags
   project_name   = var.project_name
