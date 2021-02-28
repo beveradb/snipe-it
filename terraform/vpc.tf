@@ -5,14 +5,6 @@ resource "aws_vpc" "bimtwin-snipe-vpc" {
   tags                 = local.tags
 }
 
-/*
- * Get default security group for reference later
- */
-data "aws_security_group" "bimtwin-snipe-vpc-default-sg" {
-  name   = "default"
-  vpc_id = aws_vpc.bimtwin-snipe-vpc.id
-}
-
 resource "aws_internet_gateway" "bimtwin-snipe-igw" {
   vpc_id = aws_vpc.bimtwin-snipe-vpc.id
   tags   = local.tags

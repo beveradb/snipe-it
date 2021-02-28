@@ -1,22 +1,3 @@
-resource "aws_subnet" "bimtwin-snipe-bastion-subnet" {
-  cidr_block        = cidrsubnet(aws_vpc.bimtwin-snipe-vpc.cidr_block, 3, 1)
-  vpc_id            = aws_vpc.bimtwin-snipe-vpc.id
-  availability_zone = "${local.region}a"
-  tags              = local.tags
-}
-
-resource "aws_subnet" "bimtwin-snipe-bastion-subnet-two" {
-  cidr_block        = cidrsubnet(aws_vpc.bimtwin-snipe-vpc.cidr_block, 4, 1)
-  vpc_id            = aws_vpc.bimtwin-snipe-vpc.id
-  availability_zone = "${local.region}b"
-  tags              = local.tags
-}
-
-resource "aws_route_table_association" "bimtwin-snipe-bastion-route-table-subnet-association" {
-  subnet_id      = aws_subnet.bimtwin-snipe-bastion-subnet.id
-  route_table_id = aws_route_table.bimtwin-snipe-route-table.id
-}
-
 data "aws_ami" "bimtwin-snipe-bastion-ami" {
   most_recent = true
   owners      = ["679593333241"]
@@ -84,9 +65,16 @@ resource "aws_instance" "bimtwin-snipe-bastion-instance" {
   key_name      = aws_key_pair.AndrewCurveMacBook2020RSA.key_name
   ami           = data.aws_ami.bimtwin-snipe-bastion-ami.id
   instance_type = "t3.micro"
-  subnet_id     = aws_subnet.bimtwin-snipe-bastion-subnet.id
+  subnet_id     = aws_subnet.bimtwin-snipe-bastion-subnet-one.id
 
-  vpc_security_group_ids = [aws_security_group.bimtwin-snipe-bastion-ingress.id]
+  vpc_security_group_ids = [
+    aws_security_group.bimtwin-snipe-egress-all.id,
+    aws_security_group.bimtwin-snipe-ssh.id,
+    aws_security_group.bimtwin-snipe-http.id,
+    aws_security_group.bimtwin-snipe-https.id,
+    aws_security_group.bimtwin-snipe-api-ingress.id,
+    aws_security_group.bimtwin-snipe-mysql-ingress.id,
+  ]
 
   connection {
     type        = "ssh"

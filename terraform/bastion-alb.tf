@@ -4,7 +4,7 @@ resource "aws_alb" "bimtwin-snipe-bastion-alb" {
   load_balancer_type = "application"
 
   subnets = [
-    aws_subnet.bimtwin-snipe-bastion-subnet.id,
+    aws_subnet.bimtwin-snipe-bastion-subnet-one.id,
     aws_subnet.bimtwin-snipe-bastion-subnet-two.id
   ]
 
@@ -25,7 +25,7 @@ resource "aws_lb_target_group" "bimtwin-snipe-bastion-alb-tg" {
 
   health_check {
     enabled = true
-    path    = "/health"
+    path    = "/login"
   }
 
   depends_on = [aws_alb.bimtwin-snipe-bastion-alb]
