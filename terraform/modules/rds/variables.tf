@@ -1,7 +1,7 @@
 variable "tags" {
   type = map(string)
 }
-variable "project_name" {
+variable "project_name_hyphenated" {
   type = string
 }
 variable "db_name" {

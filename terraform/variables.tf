@@ -6,13 +6,21 @@ variable "aws_zones" {
   type    = list(string)
   default = ["eu-west-1a", "eu-west-1b"]
 }
-variable "project_name" {
+variable "project_name_proper_case" {
+  type    = string
+  default = "BIM Twin"
+}
+variable "project_name_hyphenated" {
   type    = string
   default = "bimtwin-snipe"
 }
 variable "primary_domain" {
   type    = string
   default = "bimtwin.ml"
+}
+variable "admin_email" {
+  type    = string
+  default = "admin@bimtwin.ml"
 }
 variable "docker_image" {
   type    = string

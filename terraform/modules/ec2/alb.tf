@@ -1,5 +1,5 @@
 resource "aws_alb" "bastion-alb" {
-  name               = "${var.project_name}-bastion-alb"
+  name               = "${var.project_name_hyphenated}-bastion-alb"
   internal           = false
   load_balancer_type = "application"
 
@@ -20,7 +20,7 @@ resource "aws_alb" "bastion-alb" {
 }
 
 resource "aws_lb_target_group" "bastion-alb-tg" {
-  name        = "${var.project_name}-bastion-alb-tg"
+  name        = "${var.project_name_hyphenated}-bastion-alb-tg"
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"

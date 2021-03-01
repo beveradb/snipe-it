@@ -1,5 +1,5 @@
 resource "aws_security_group" "egress-all" {
-  name        = "${var.project_name}-egress-all"
+  name        = "${var.project_name_hyphenated}-egress-all"
   description = "Allow all outbound traffic"
   vpc_id      = aws_vpc.vpc.id
 
@@ -13,7 +13,7 @@ resource "aws_security_group" "egress-all" {
 }
 
 resource "aws_security_group" "http" {
-  name        = "${var.project_name}-http"
+  name        = "${var.project_name_hyphenated}-http"
   description = "HTTP traffic"
   vpc_id      = aws_vpc.vpc.id
 
@@ -27,7 +27,7 @@ resource "aws_security_group" "http" {
 }
 
 resource "aws_security_group" "https" {
-  name        = "${var.project_name}-https"
+  name        = "${var.project_name_hyphenated}-https"
   description = "HTTPS traffic"
   vpc_id      = aws_vpc.vpc.id
 
@@ -41,7 +41,7 @@ resource "aws_security_group" "https" {
 }
 
 resource "aws_security_group" "ssh" {
-  name        = "${var.project_name}-ssh"
+  name        = "${var.project_name_hyphenated}-ssh"
   description = "SSH traffic"
   vpc_id      = aws_vpc.vpc.id
 
@@ -55,7 +55,7 @@ resource "aws_security_group" "ssh" {
 }
 
 resource "aws_security_group" "api-ingress" {
-  name        = "${var.project_name}-api-ingress"
+  name        = "${var.project_name_hyphenated}-api-ingress"
   description = "Allow ingress to API"
   vpc_id      = aws_vpc.vpc.id
 
@@ -69,7 +69,7 @@ resource "aws_security_group" "api-ingress" {
 }
 
 resource "aws_security_group" "mysql-ingress" {
-  name        = "${var.project_name}-mysql-ingress"
+  name        = "${var.project_name_hyphenated}-mysql-ingress"
   description = "Allow ingress to MySQL"
   vpc_id      = aws_vpc.vpc.id
 

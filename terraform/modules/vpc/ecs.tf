@@ -1,4 +1,3 @@
-
 resource "aws_subnet" "ecs-subnet-private" {
   cidr_block        = cidrsubnet(aws_vpc.vpc.cidr_block, 3, 5)
   vpc_id            = aws_vpc.vpc.id

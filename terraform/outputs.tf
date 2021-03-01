@@ -22,3 +22,15 @@ output "ecs_alb_dns_addr" {
 output "ecs_subdomain_url" {
   value = module.ecs.ecs_subdomain_url
 }
+
+output "smtp_server" {
+  value = module.ses.smtp_server
+}
+
+output "smtp_username" {
+  value = module.ses.smtp_username
+}
+
+output "smtp_password_v4" {
+  value = module.ses.smtp_password_v4
+}

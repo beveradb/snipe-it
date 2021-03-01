@@ -7,6 +7,12 @@ variable "project_name_hyphenated" {
 variable "region" {
   type = string
 }
-variable "primary_domain" {
+variable "domain" {
+  type = string
+}
+variable "route53_zone_id" {
+  type = string
+}
+variable "ses_bucket_name" {
   type = string
 }

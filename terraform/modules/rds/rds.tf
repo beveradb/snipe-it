@@ -1,5 +1,5 @@
 resource "aws_db_subnet_group" "rds-subnet-group" {
-  name       = "${var.project_name}-subnet-group"
+  name       = "${var.project_name_hyphenated}-subnet-group"
   subnet_ids = [
     var.subnet_ids.rds-subnet-one,
     var.subnet_ids.rds-subnet-two
@@ -19,7 +19,7 @@ resource "random_password" "random-password" {
 }
 
 resource "aws_rds_cluster" "db-cluster" {
-  cluster_identifier     = "${var.project_name}-db-cluster"
+  cluster_identifier     = "${var.project_name_hyphenated}-db-cluster"
   engine                 = "aurora-mysql"
   engine_mode            = "serverless"
   engine_version         = "5.7.mysql_aurora.2.07.1"

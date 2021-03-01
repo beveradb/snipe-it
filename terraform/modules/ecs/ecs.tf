@@ -1,21 +1,21 @@
 # We need a cluster in which to put our service.
 resource "aws_ecs_cluster" "ecs-cluster" {
-  name = "${var.project_name}-ecs"
+  name = "${var.project_name_hyphenated}-ecs"
 }
 
 # An ECR repository is a private alternative to Docker Hub.
 resource "aws_ecr_repository" "ecr" {
-  name = "${var.project_name}-ecr"
+  name = "${var.project_name_hyphenated}-ecr"
 }
 
 # Log groups hold logs from our app.
 resource "aws_cloudwatch_log_group" "log-group" {
-  name = "/ecs/${var.project_name}"
+  name = "/ecs/${var.project_name_hyphenated}"
 }
 
 # The main service.
 resource "aws_ecs_service" "ecs-service" {
-  name            = "${var.project_name}-ecs-service"
+  name            = "${var.project_name_hyphenated}-ecs-service"
   task_definition = aws_ecs_task_definition.ecs-task.arn
   cluster         = aws_ecs_cluster.ecs-cluster.id
   launch_type     = "FARGATE"
@@ -30,7 +30,7 @@ resource "aws_ecs_service" "ecs-service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs-alb-tg.arn
-    container_name   = var.project_name
+    container_name   = var.project_name_hyphenated
     container_port   = var.container_port
   }
 
@@ -57,12 +57,12 @@ resource "aws_ecs_service" "ecs-service" {
 
 # The task definition for our app.
 resource "aws_ecs_task_definition" "ecs-task" {
-  family = var.project_name
+  family = var.project_name_hyphenated
 
   container_definitions = <<EOF
   [
     {
-      "name": "${var.project_name}",
+      "name": "${var.project_name_hyphenated}",
       "image": "${var.docker_image == "" ? aws_ecr_repository.ecr.repository_url : var.docker_image}:${var.docker_image_version}",
       "portMappings": [
         {
@@ -74,7 +74,7 @@ resource "aws_ecs_task_definition" "ecs-task" {
         "logDriver": "awslogs",
         "options": {
           "awslogs-region": "${var.region}",
-          "awslogs-group": "/ecs/${var.project_name}",
+          "awslogs-group": "/ecs/${var.project_name_hyphenated}",
           "awslogs-stream-prefix": "ecs"
         }
       }
@@ -100,7 +100,7 @@ EOF
 # The assume_role_policy field works with the following aws_iam_policy_document to allow
 # ECS tasks to assume this role we're creating.
 resource "aws_iam_role" "ecs-task-execution-role" {
-  name               = "${var.project_name}-ecs-task-execution-role"
+  name               = "${var.project_name_hyphenated}-ecs-task-execution-role"
   assume_role_policy = data.aws_iam_policy_document.ecs-task-assume-role.json
 }
 
@@ -128,7 +128,7 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role" {
 }
 
 resource "aws_alb" "ecs-alb" {
-  name               = "${var.project_name}-ecs-alb"
+  name               = "${var.project_name_hyphenated}-ecs-alb"
   internal           = false
   load_balancer_type = "application"
 
@@ -173,7 +173,7 @@ resource "aws_alb_listener" "ecs-alb-listener-https" {
 }
 
 resource "aws_lb_target_group" "ecs-alb-tg" {
-  name        = "${var.project_name}-ecs-alb-tg"
+  name        = "${var.project_name_hyphenated}-ecs-alb-tg"
   port        = var.container_port
   protocol    = "HTTP"
   target_type = "ip"
