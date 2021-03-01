@@ -102,6 +102,12 @@ EOF
 resource "aws_iam_role" "ecs-task-execution-role" {
   name               = "${var.project_name_hyphenated}-ecs-task-execution-role"
   assume_role_policy = data.aws_iam_policy_document.ecs-task-assume-role.json
+
+  lifecycle {
+    ignore_changes = [
+      assume_role_policy
+    ]
+  }
 }
 
 data "aws_iam_policy_document" "ecs-task-assume-role" {

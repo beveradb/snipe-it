@@ -44,3 +44,15 @@ resource "aws_route_table_association" "rds-subnet-two-route-table-association" 
   subnet_id      = aws_subnet.rds-subnet-two.id
   route_table_id = aws_route_table.route-table.id
 }
+
+resource "aws_subnet" "efs-subnet" {
+  cidr_block        = cidrsubnet(aws_vpc.vpc.cidr_block, 4, 1)
+  vpc_id            = aws_vpc.vpc.id
+  availability_zone = "${var.region}a"
+  tags              = var.tags
+}
+
+resource "aws_route_table_association" "efs-subnet-route-table-association" {
+  subnet_id      = aws_subnet.efs-subnet.id
+  route_table_id = aws_route_table.route-table.id
+}

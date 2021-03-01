@@ -30,5 +30,6 @@ output "subnet_ids" {
     ecs-subnet-private    = aws_subnet.ecs-subnet-private.id
     ecs-subnet-public-one = aws_subnet.ecs-subnet-public-one.id
     ecs-subnet-public-two = aws_subnet.ecs-subnet-public-two.id
+    efs-subnet            = aws_subnet.efs-subnet.id
   }
 }

@@ -36,11 +36,22 @@ module "ses" {
   depends_on = [module.vpc]
 
   tags                    = var.tags
+  region                  = var.region
   project_name_hyphenated = var.project_name_hyphenated
   domain                  = var.primary_domain
-  region                  = var.region
   ses_bucket_name         = "${var.primary_domain}-ses-email-inbox"
   route53_zone_id         = module.vpc.route53_zone_id
+}
+
+module "efs" {
+  source     = "./modules/efs"
+  depends_on = [module.vpc]
+
+  tags                    = var.tags
+  region                  = var.region
+  domain                  = var.primary_domain
+  project_name_hyphenated = var.project_name_hyphenated
+  subnet_ids              = module.vpc.subnet_ids
 }
 
 module "ecs" {

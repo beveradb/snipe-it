@@ -96,6 +96,12 @@ resource "aws_s3_bucket_policy" "ses_inbox" {
     ]
 }
 POLICY
+
+  lifecycle {
+    ignore_changes = [
+      policy
+    ]
+  }
 }
 
 resource "aws_ses_receipt_rule_set" "rule_set" {
@@ -170,6 +176,12 @@ resource "aws_iam_user_policy" "smtp_policy" {
   ]
 }
 EOF
+
+  lifecycle {
+    ignore_changes = [
+      policy
+    ]
+  }
 }
 
 # IAM access key for SES SMTP user
