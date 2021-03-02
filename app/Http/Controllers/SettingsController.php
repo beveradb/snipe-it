@@ -1142,6 +1142,7 @@ class SettingsController extends Controller
      */
     public function getPurge()
     {
+        \Log::warning('User ID '.Auth::user()->id.' is attempting a PURGE');
         return view('settings.purge-form');
     }
 
@@ -1158,6 +1159,8 @@ class SettingsController extends Controller
     {
         if (! config('app.lock_passwords')) {
             if ('DELETE' == $request->input('confirm_purge')) {
+
+                \Log::warning('User ID '.Auth::user()->id.' initiated a PURGE!');
                 // Run a backup immediately before processing
                 Artisan::call('backup:run');
                 Artisan::call('snipeit:purge', ['--force' => 'true', '--no-interaction' => true]);

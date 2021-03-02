@@ -21,10 +21,22 @@
 
                       <div>
                           <label>
-                              <input type="checkbox" value="1" name="{{ $field->db_column_name() }}[]" class="minimal" {{ Request::old($field->db_column_name()) != '' ? ' checked="checked"' : '' }}> key: {{ $key }} value: {{ $value }}
+                              <input type="checkbox" value="1" name="{{ $field->db_column_name() }}[]" class="minimal" {{ Request::old($field->db_column_name()) != '' ? ' checked="checked"' : '' }}>
+                              {{ $value }}
                           </label>
                       </div>
                   @endforeach
+
+              @elseif ($field->element=='radio')
+              @foreach ($field->formatFieldValuesAsArray() as $value)
+
+              <div>
+                  <label>
+                      <input type="radio" value="{{ $value }}" name="{{ $field->db_column_name() }}" class="minimal" {{ isset($item) ? ($item->{$field->db_column_name()} == $value ? ' checked="checked"' : '') : (Request::old($field->db_column_name()) != '' ? ' checked="checked"' : '') }}>
+                      {{ $value }}
+                  </label>
+              </div>
+          @endforeach
 
               @endif
 
