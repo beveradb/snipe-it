@@ -110,7 +110,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h2 class="box-title">This is your dashboard. There are many like it, but this one is yours.</h2>
+                    <h2 class="box-title">This asset tracking dashboard is part of the BIM Twin fork of Snipe IT.</h2>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
