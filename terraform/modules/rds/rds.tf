@@ -31,10 +31,9 @@ resource "aws_rds_cluster" "db-cluster" {
   skip_final_snapshot    = true
   db_subnet_group_name   = aws_db_subnet_group.rds-subnet-group.name
   vpc_security_group_ids = [
-    var.security_group_ids.egress-all,
-    var.security_group_ids.ingress-http,
-    var.security_group_ids.ingress-https,
-    var.security_group_ids.ingress-mysql
+    var.security_group_ids.egress,
+    var.security_group_ids.http,
+    var.security_group_ids.mysql
   ]
   scaling_configuration {
     min_capacity = 2

@@ -34,3 +34,19 @@ output "smtp_username" {
 output "smtp_password_v4" {
   value = module.ses.smtp_password_v4
 }
+
+output "efs_filesystem_id" {
+  value = module.efs.efs_filesystem_id
+}
+
+output "efs_dns_name" {
+  value = module.efs.efs_dns_name
+}
+
+output "ec2_bastion_host_eip_dns" {
+  value = module.ec2.bastion_eip_dns_addr
+}
+
+output "ec2_bastion_host_subdomain" {
+  value = module.ec2.bastion_host_subdomain
+}

@@ -3,11 +3,6 @@ resource "aws_ecs_cluster" "ecs-cluster" {
   name = "${var.project_name_hyphenated}-ecs"
 }
 
-# An ECR repository is a private alternative to Docker Hub.
-resource "aws_ecr_repository" "ecr" {
-  name = "${var.project_name_hyphenated}-ecr"
-}
-
 # Log groups hold logs from our app.
 resource "aws_cloudwatch_log_group" "log-group" {
   name = "/ecs/${var.project_name_hyphenated}"
@@ -18,7 +13,10 @@ resource "aws_ecs_service" "ecs-service" {
   name            = "${var.project_name_hyphenated}-ecs-service"
   task_definition = aws_ecs_task_definition.ecs-task.arn
   cluster         = aws_ecs_cluster.ecs-cluster.id
-  launch_type     = "FARGATE"
+
+  # Platform version 1.4.0 needed for EFS mount point support on Fargate - apparently the "LATEST" version tag is still mapped to 1.3.0...
+  platform_version = "1.4.0"
+  launch_type      = "FARGATE"
 
   desired_count = 1
 
@@ -38,10 +36,9 @@ resource "aws_ecs_service" "ecs-service" {
     assign_public_ip = false
 
     security_groups = [
-      var.security_group_ids.egress-all,
-      var.security_group_ids.ingress-api,
-      var.security_group_ids.ingress-http,
-      var.security_group_ids.ingress-https,
+      var.security_group_ids.egress,
+      var.security_group_ids.http,
+      var.security_group_ids.nfs,
     ]
 
     subnets = [
@@ -63,11 +60,17 @@ resource "aws_ecs_task_definition" "ecs-task" {
   [
     {
       "name": "${var.project_name_hyphenated}",
-      "image": "${var.docker_image == "" ? aws_ecr_repository.ecr.repository_url : var.docker_image}:${var.docker_image_version}",
+      "image": "${var.docker_image}:${var.docker_image_version}",
       "portMappings": [
         {
           "containerPort": ${var.container_port}
         }
+      ],
+      "mountPoints": [
+          {
+              "containerPath": "/config",
+              "sourceVolume": "efs-config"
+          }
       ],
       ${var.container_env_vars_config}
       "logConfiguration": {
@@ -82,6 +85,14 @@ resource "aws_ecs_task_definition" "ecs-task" {
   ]
 
 EOF
+
+  volume {
+    name = "efs-config"
+    efs_volume_configuration {
+      file_system_id = var.efs_filesystem_id
+      root_directory = "/config"
+    }
+  }
 
   execution_role_arn = aws_iam_role.ecs-task-execution-role.arn
 
@@ -144,9 +155,8 @@ resource "aws_alb" "ecs-alb" {
   ]
 
   security_groups = [
-    var.security_group_ids.egress-all,
-    var.security_group_ids.ingress-http,
-    var.security_group_ids.ingress-https,
+    var.security_group_ids.egress,
+    var.security_group_ids.http,
   ]
 }
 

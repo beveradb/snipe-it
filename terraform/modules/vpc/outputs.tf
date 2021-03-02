@@ -8,12 +8,11 @@ output "route53_zone_id" {
 
 output "security_group_ids" {
   value = {
-    egress-all    = aws_security_group.egress-all.id
-    ingress-http  = aws_security_group.http.id
-    ingress-https = aws_security_group.https.id
-    ingress-ssh   = aws_security_group.ssh.id
-    ingress-api   = aws_security_group.api-ingress.id
-    ingress-mysql = aws_security_group.mysql-ingress.id
+    egress = aws_security_group.egress.id
+    http   = aws_security_group.http.id
+    ssh    = aws_security_group.ssh.id
+    mysql  = aws_security_group.mysql.id
+    nfs    = aws_security_group.nfs.id
   }
 }
 

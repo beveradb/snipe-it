@@ -52,6 +52,27 @@ module "efs" {
   domain                  = var.primary_domain
   project_name_hyphenated = var.project_name_hyphenated
   subnet_ids              = module.vpc.subnet_ids
+  security_group_ids      = module.vpc.security_group_ids
+}
+
+# This EC2 instance is here for the sole purpose of testing/debugging/administering the other components.
+# Comment out and re-apply with terraform to destroy this instance when not in use to save money!
+module "ec2" {
+  source     = "./modules/ec2"
+  depends_on = [module.vpc]
+
+  tags                    = var.tags
+  region                  = var.region
+  domain                  = var.primary_domain
+  project_name_hyphenated = var.project_name_hyphenated
+  subnet_ids              = module.vpc.subnet_ids
+  ec2_ssh_key_name        = var.ec2_ssh_key_name
+  ec2_ssh_public_key      = var.ec2_ssh_public_key
+
+  acm_cert_arn       = module.vpc.acm_cert_arn
+  route53_zone_id    = module.vpc.route53_zone_id
+  security_group_ids = module.vpc.security_group_ids
+  vpc_id             = module.vpc.vpc_id
 }
 
 module "ecs" {
@@ -92,4 +113,5 @@ EOF
   acm_cert_arn       = module.vpc.acm_cert_arn
   subnet_ids         = module.vpc.subnet_ids
   security_group_ids = module.vpc.security_group_ids
+  efs_filesystem_id  = module.efs.efs_filesystem_id
 }
