@@ -19,6 +19,11 @@ services:
       - mysql
     volumes:
       - /Users/andrew/Projects/snipe-it/localdata/config:/config
+      - /Users/andrew/Projects/snipe-it/app:/var/www/html/app
+      - /Users/andrew/Projects/snipe-it/config:/var/www/html/config
+      - /Users/andrew/Projects/snipe-it/database:/var/www/html/database
+      - /Users/andrew/Projects/snipe-it/resources:/var/www/html/resources
+      - /Users/andrew/Projects/snipe-it/routes:/var/www/html/routes
     environment:
       - APP_URL=localhost:8080
       - APP_DEBUG=false
