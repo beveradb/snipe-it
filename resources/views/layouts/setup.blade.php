@@ -57,7 +57,7 @@
           <div class="container">
               <div class="row">
                   <div class="col-lg-10 col-lg-offset-1">
-                    <h1 class="page-header">Snipe-IT Pre-Flight</h1>
+                    <h1 class="page-header">BIM Twin Pre-Flight</h1>
                   </div>
                   <div class="col-lg-11 col-lg-offset-1">
 
