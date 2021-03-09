@@ -4,29 +4,29 @@ return array(
 
     'undeployable' 		=> '<strong>Warning: </strong> This asset has been marked as currently undeployable.
                         If this status has changed, please update the asset status.',
-    'does_not_exist' 	=> 'Asset does not exist.',
+    'does_not_exist' 	=> 'Component does not exist.',
     'does_not_exist_or_not_requestable' => 'Nice try. That asset does not exist or is not requestable.',
     'assoc_users'	 	=> 'This asset is currently checked out to a user and cannot be deleted. Please check the asset in first, and then try deleting again. ',
 
     'create' => array(
-        'error'   		=> 'Asset was not created, please try again. :(',
-        'success' 		=> 'Asset created successfully. :)'
+        'error'   		=> 'Component was not created, please try again. :(',
+        'success' 		=> 'Component created successfully. :)'
     ),
 
     'update' => array(
-        'error'   			=> 'Asset was not updated, please try again',
-        'success' 			=> 'Asset updated successfully.',
+        'error'   			=> 'Component was not updated, please try again',
+        'success' 			=> 'Component updated successfully.',
         'nothing_updated'	=>  'No fields were selected, so nothing was updated.',
     ),
 
     'restore' => array(
-        'error'   		=> 'Asset was not restored, please try again',
-        'success' 		=> 'Asset restored successfully.'
+        'error'   		=> 'Component was not restored, please try again',
+        'success' 		=> 'Component restored successfully.'
     ),
 
     'audit' => array(
-        'error'   		=> 'Asset audit was unsuccessful. Please try again.',
-        'success' 		=> 'Asset audit successfully logged.'
+        'error'   		=> 'Component audit was unsuccessful. Please try again.',
+        'success' 		=> 'Component audit successfully logged.'
     ),
 
 
@@ -59,24 +59,24 @@ return array(
     ),
 
     'checkout' => array(
-        'error'   		=> 'Asset was not checked out, please try again',
-        'success' 		=> 'Asset checked out successfully.',
+        'error'   		=> 'Component was not checked out, please try again',
+        'success' 		=> 'Component checked out successfully.',
         'user_does_not_exist' => 'That user is invalid. Please try again.',
         'not_available' => 'That asset is not available for checkout!',
         'no_assets_selected' => 'You must select at least one asset from the list'
     ),
 
     'checkin' => array(
-        'error'   		=> 'Asset was not checked in, please try again',
-        'success' 		=> 'Asset checked in successfully.',
+        'error'   		=> 'Component was not checked in, please try again',
+        'success' 		=> 'Component checked in successfully.',
         'user_does_not_exist' => 'That user is invalid. Please try again.',
         'already_checked_in'  => 'That asset is already checked in.',
 
     ),
 
     'requests' => array(
-        'error'   		=> 'Asset was not requested, please try again',
-        'success' 		=> 'Asset requested successfully.',
+        'error'   		=> 'Component was not requested, please try again',
+        'success' 		=> 'Component requested successfully.',
         'canceled'      => 'Checkout request successfully canceled'
     )
 

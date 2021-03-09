@@ -2,16 +2,16 @@
 
 return array(
 
-    'create'				=> 'Create Asset Model',
+    'create'				=> 'Create Component Model',
     'created_at' 			=> 'Created at',
     'eol'	 				=> 'EOL',
     'modelnumber'   		=> 'Model No.',
-    'name'      			=> 'Asset Model Name',
-    'numassets' 			=> 'Assets',
-    'title'					=> 'Asset Models',
-    'update'				=> 'Update Asset Model',
-    'view'					=> 'View Asset Model',
-    'update'				=> 'Update Asset Model',
+    'name'      			=> 'Component Model Name',
+    'numassets' 			=> 'Components',
+    'title'					=> 'Component Models',
+    'update'				=> 'Update Component Model',
+    'view'					=> 'View Component Model',
+    'update'				=> 'Update Component Model',
     'clone'				=> 'Clone Model',
     'edit'				=> 'Edit Model',
 );

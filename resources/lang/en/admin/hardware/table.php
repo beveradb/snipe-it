@@ -2,7 +2,7 @@
 
 return array(
 
-    'asset_tag'   	=> 'Asset Tag',
+    'asset_tag'   	=> 'Component Tag',
     'asset_model'       => 'Model',
     'book_value'  	=> 'Value',
     'change' 		=> 'In/Out',
@@ -17,7 +17,7 @@ return array(
     'purchase_date'	=> 'Purchased',
     'serial'   		=> 'Serial',
     'status'   		=> 'Status',
-    'title'      	=> 'Asset ',
+    'title'      	=> 'Component ',
     'image'		=> 'Device Image',
     'days_without_acceptance' => 'Days Without Acceptance',
     'monthly_depreciation' => 'Monthly Depreciation'

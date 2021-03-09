@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'asset_categories' 					=> 'Asset Categories',
+    'asset_categories' 					=> 'Component Categories',
     'category_name'  					=> 'Category Name',
     'checkin_email'                     => 'Send email to user on checkin/checkout.',
     'checkin_email_notification'        => 'This user will be sent an email on checkin/checkout.',

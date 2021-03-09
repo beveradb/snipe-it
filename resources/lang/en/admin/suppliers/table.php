@@ -4,7 +4,7 @@ return array(
     'about_suppliers_title' => 'About Suppliers',
     'about_suppliers_text'  => 'Suppliers are used to track the source of items',
     'address'               => 'Supplier Address',
-    'assets'                => 'Assets',
+    'assets'                => 'Components',
     'city'                  => 'City',
     'contact'               => 'Contact Name',
     'country'               => 'Country',
@@ -21,7 +21,7 @@ return array(
     'update'                => 'Update Supplier',
     'url'                   => 'URL',
     'view'                  => 'View Supplier',
-    'view_assets_for'       => 'View Assets for',
+    'view_assets_for'       => 'View Components for',
     'zip'                   => 'Postal Code',
 
 );
