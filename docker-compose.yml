@@ -6,6 +6,8 @@ services:
     restart: always
     volumes:
       - ./localdata/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=snipemysqlrootpassword
       - MYSQL_USER=snipe
@@ -18,11 +20,17 @@ services:
       - mysql
     volumes:
       - ./localdata/config:/config
+      - ./localdata/dumps:/var/lib/snipeit/dumps
+      - ./localdata/uploads:/var/lib/snipeit/data/private_uploads
+      - ./app:/var/www/html/app
+      - ./routes:/var/www/html/routes
+      - ./public:/var/www/html/public
+      - ./resources:/var/www/html/resources
     environment:
       - APP_URL=localhost
+      - APP_DEBUG=true- APP_ENV=developement
       - APP_ENV=developement
-      - APP_DEBUG=true
-      - APP_KEY=base64:glJpcM7BYwWiBggp3SQ/+NlRkqsBQMaGEOjemXqJzOU=
+      - APP_KEY=base64:glJpcM7BYwWiBggp3SQ/+NlRkqsBQMaGEOjemXqJzOF=
       - MYSQL_PORT_3306_TCP_ADDR=mysql
       - MYSQL_PORT_3306_TCP_PORT=3306
       - MYSQL_DATABASE=snipe
