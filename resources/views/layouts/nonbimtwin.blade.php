@@ -508,6 +508,46 @@
                 </ul>
               </li>
               @endcan
+              @can('view', \App\Models\License::class)
+              <li{!! (Request::is('licenses*') ? ' class="active"' : '') !!}>
+                  <a href="{{ route('licenses.index') }}">
+                    <i class="fa fa-floppy-o"></i>
+                    <span>{{ trans('general.licenses') }}</span>
+                  </a>
+              </li>
+              @endcan
+              @can('index', \App\Models\Accessory::class)
+              <li{!! (Request::is('accessories*') ? ' class="active"' : '') !!}>
+                <a href="{{ route('accessories.index') }}">
+                  <i class="fa fa-keyboard-o"></i>
+                  <span>{{ trans('general.accessories') }}</span>
+                </a>
+              </li>
+              @endcan
+              @can('view', \App\Models\Consumable::class)
+            <li{!! (Request::is('consumables*') ? ' class="active"' : '') !!}>
+                <a href="{{ url('consumables') }}">
+                  <i class="fa fa-tint"></i>
+                  <span>{{ trans('general.consumables') }}</span>
+                </a>
+            </li>
+             @endcan
+             @can('view', \App\Models\Component::class)
+            <li{!! (Request::is('components*') ? ' class="active"' : '') !!}>
+                <a href="{{ route('components.index') }}">
+                  <i class="fa fa-hdd-o"></i>
+                  <span>{{ trans('general.components') }}</span>
+                </a>
+            </li>
+            @endcan
+            @can('view', \App\Models\PredefinedKit::class)
+                <li{!! (Request::is('kits') ? ' class="active"' : '') !!}>
+                    <a href="{{ route('kits.index') }}">
+                        <i class="fa fa-object-group"></i>
+                        <span>{{ trans('general.kits') }}</span>
+                    </a>
+                </li>
+            @endcan
 
             @can('view', \App\Models\User::class)
             <li{!! (Request::is('users*') ? ' class="active"' : '') !!}>
@@ -672,6 +712,16 @@
                 </ul>
             </li>
             @endcan
+
+            @can('viewRequestable', \App\Models\Asset::class)
+            <li{!! (Request::is('account/requestable-assets') ? ' class="active"' : '') !!}>
+            <a href="{{ route('requestable-assets') }}">
+            <i class="fa fa-laptop"></i>
+            <span>{{ trans('admin/hardware/general.requestable') }}</span>
+            </a>
+            </li>
+            @endcan
+
 
           </ul>
         </section>

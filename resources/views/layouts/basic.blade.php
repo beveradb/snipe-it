@@ -11,6 +11,7 @@
     <link rel="shortcut icon" type="image/ico" href="{{ ($snipeSettings) && ($snipeSettings->favicon!='') ?  Storage::disk('public')->url('').e($snipeSettings->favicon) : 'favicon.ico' }} ">
     {{-- stylesheets --}}
     <link rel="stylesheet" href="{{ url(mix('css/dist/all.css')) }}">
+    <link rel="stylesheet" href="{{ url('css/custom.css') }}">
     <link rel="shortcut icon" type="image/ico" href="{{ url(asset('favicon.ico')) }}">
 
     <script nonce="{{ csrf_token() }}">
@@ -53,11 +54,9 @@
 
 <body class="hold-transition login-page">
 
-    @if (($snipeSettings) && ($snipeSettings->logo!=''))
-        <center>
-            <img id="login-logo" src="{{ Storage::disk('public')->url('').e($snipeSettings->logo) }}">
-        </center>
-    @endif
+    <center>
+        <img id="login-logo" src="{{ ($snipeSettings) && ($snipeSettings->logo!='') ? Storage::disk('public')->url(e($snipeSettings->logo)) : '/img/logo.png' }}">
+    </center>
   <!-- Content -->
   @yield('content')
 

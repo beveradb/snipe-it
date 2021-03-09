@@ -8,6 +8,7 @@
         @show
       </title>
         <link rel="stylesheet" href="{{ url(mix('css/dist/all.css')) }}">
+        <link rel="stylesheet" href="{{ url('css/custom.css') }}">
 
 
         <script nonce="{{ csrf_token() }}">
