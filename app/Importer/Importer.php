@@ -10,6 +10,8 @@ use ForceUTF8\Encoding;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
+use PhpOffice\PhpSpreadsheet\Exception;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 abstract class Importer
 {
@@ -102,6 +104,7 @@ abstract class Importer
     /**
      * ObjectImporter constructor.
      * @param string $file
+     * @throws Exception
      */
     public function __construct($file)
     {
@@ -111,11 +114,16 @@ abstract class Importer
         }
         // By default the importer passes a url to the file.
         // However, for testing we also support passing a string directly
-        if (is_file($file)) {
-            $this->csv = Reader::createFromPath($file);
-        } else {
-            $this->csv = Reader::createFromString($file);
+        if (!is_file($file)) {
+            $tmpfname = tempnam("/tmp", "snipe-temp-import-file");
+            file_put_contents($tmpfname, $file);
+            $file = $tmpfname;
         }
+
+        $spreadsheet = IOFactory::load($file);
+        $spreadsheet->setActiveSheetIndex(0);
+        $this->csv = $spreadsheet->getActiveSheet()->toArray(null, true, true, false);
+
         $this->tempPassword = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 20);
     }
     // Cached Values for import lookups
@@ -130,9 +138,11 @@ abstract class Importer
      */
     public function import()
     {
-        $headerRow = $this->csv->fetchOne();
-        $this->csv->setHeaderOffset(0); //explicitly sets the CSV document header record
-        $results = $this->normalizeInputArray($this->csv->getRecords($headerRow));
+        $headerRow = array_map('strtolower', array_shift($this->csv));
+        $results = $this->getRecordsWithHeaderKeys($headerRow);
+
+        $this->log('$headerRow: ' . var_export($headerRow, true));
+        $this->log('$results: ' . var_export($results, true));
 
         $this->populateCustomFields($headerRow);
 
@@ -220,20 +230,6 @@ abstract class Importer
         return $key;
     }
 
-    /**
-     * Used to lowercase header values to ensure we're comparing values properly.
-     * 
-     * @param $results
-     * @return array
-     */
-    public function normalizeInputArray($results)
-    {
-        $newArray = [];
-        foreach ($results as $index => $arrayToNormalize) {
-            $newArray[$index] = array_change_key_case($arrayToNormalize);
-        }
-        return $newArray;
-    }
     /**
      * Figure out the fieldname of the custom field
      *
@@ -510,5 +506,18 @@ abstract class Importer
         }
         $this->log('No matching Manager ' . $user_manager_first_name . ' '. $user_manager_last_name . ' found. If their user account is being created through this import, you should re-process this file again. ');
         return null;
+    }
+
+    private function getRecordsWithHeaderKeys($headers)
+    {
+        $newRows = [];
+        foreach ($this->csv as $rowIndex => $row) {
+            $newRow = [];
+            foreach ($row as $origKey => $value) {
+                $newRow[$headers[$origKey]] = $value;
+            }
+            $newRows[$rowIndex] = $newRow;
+        }
+        return $newRows;
     }
 }

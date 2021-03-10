@@ -110,7 +110,7 @@
                     update: false,
                     importTypes: [
                         { id: 'asset', text: 'Components' },
-                        { id: 'cobiecomponents', text: 'COBIE-Components' },
+                        { id: 'cobie_component', text: 'COBIE-Components' },
                         { id: 'user', text: 'Users' }
                     ],
                     statusText: null,
@@ -146,7 +146,7 @@
                         {id: 'status', text: 'Status' },
                         {id: 'warranty_months', text: 'Warranty Months' },
                     ],
-                    cobiecomponents: [
+                    cobie_component: [
                         {id: 'asset_tag', text: 'Asset Tag' },
                         {id: 'asset_model', text: 'Model Name' },
                         {id: 'checkout_class', text: 'Checkout Type' },
@@ -213,9 +213,9 @@
                             .concat(this.columnOptions.assets)
                             .concat(this.columnOptions.customFields)
                             .sort(sorter);
-                    case 'cobiecomponents':
+                    case 'cobie_component':
                         return this.columnOptions.general
-                            .concat(this.columnOptions.cobiecomponents)
+                            .concat(this.columnOptions.cobie_component)
                             .concat(this.columnOptions.customFields)
                             .sort(sorter);
 

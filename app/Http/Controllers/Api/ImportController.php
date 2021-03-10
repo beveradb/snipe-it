@@ -13,7 +13,10 @@ use Artisan;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use InvalidArgumentException;
 use League\Csv\Reader;
+use PhpOffice\PhpSpreadsheet\Exception;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class ImportController extends Controller
@@ -62,50 +65,70 @@ class ImportController extends Controller
                     ini_set("auto_detect_line_endings", '1');
                 }
 
-                // TODO: if file is XLSX, decode to CSV
+                $inputFileName = $file->getPathname();
+                \Log::debug('Loading file ' . $inputFileName . ' using IOFactory to identify the format');
 
+                try {
+                    $spreadsheet = IOFactory::load($inputFileName);
 
-                $reader = Reader::createFromFileObject($file->openFile('r')); //file pointer leak?
-                $import->header_row = $reader->fetchOne(0);
+                    $loadedSheetNames = $spreadsheet->getSheetNames();
+                    // TODO: take further action for file with multiple sheets
+                    /*foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
+                        \Log::debug($sheetIndex . ' -> ' . $loadedSheetName);
+                    }*/
 
-                //duplicate headers check
-                $duplicate_headers = [];
+                    $spreadsheet->setActiveSheetIndexByName($loadedSheetNames[0]);
+                    $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, false);
 
-                for($i = 0; $i<count($import->header_row); $i++) {
-                    $header = $import->header_row[$i];
-                    if(in_array($header, $import->header_row)) {
-                        $found_at = array_search($header, $import->header_row);
-                        if($i > $found_at) {
-                            //avoid reporting duplicates twice, e.g. "1 is same as 17! 17 is same as 1!!!"
-                            //as well as "1 is same as 1!!!" (which is always true)
-                            //has to be > because otherwise the first result of array_search will always be $i itself(!)
-                            array_push($duplicate_headers,"Duplicate header '$header' detected, first at column: ".($found_at+1).", repeats at column: ".($i+1));
+                    // \Log::debug("Sheet row 0: " . var_export($sheetData[1], true));
+
+                    $import->header_row = $sheetData[0];
+
+                    //duplicate headers check
+                    $duplicate_headers = [];
+
+                    for($i = 0; $i<count($import->header_row); $i++) {
+                        $header = $import->header_row[$i];
+                        if(in_array($header, $import->header_row)) {
+                            $found_at = array_search($header, $import->header_row);
+                            if($i > $found_at) {
+                                //avoid reporting duplicates twice, e.g. "1 is same as 17! 17 is same as 1!!!"
+                                //as well as "1 is same as 1!!!" (which is always true)
+                                //has to be > because otherwise the first result of array_search will always be $i itself(!)
+                                array_push($duplicate_headers,"Duplicate header '$header' detected, first at column: ".($found_at+1).", repeats at column: ".($i+1));
+                            }
                         }
                     }
-                }
-                if(count($duplicate_headers) > 0) {
-                    return response()->json(Helper::formatStandardApiResponse('error',null, implode("; ",$duplicate_headers)), 500); //should this be '4xx'?
-                }
-
-                // Grab the first row to display via ajax as the user picks fields
-                $import->first_row = $reader->fetchOne(1);
-
-                $date = date('Y-m-d-his');
-                $fixed_filename = str_slug($file->getClientOriginalName());
-                try {
-                    $file->move($path, $date.'-'.$fixed_filename);
-                } catch (FileException $exception) {
-                    $results['error']=trans('admin/hardware/message.upload.error');
-                    if (config('app.debug')) {
-                        $results['error'].= ' ' . $exception->getMessage();
+                    if(count($duplicate_headers) > 0) {
+                        return response()->json(Helper::formatStandardApiResponse('error',null, implode("; ",$duplicate_headers)), 500); //should this be '4xx'?
                     }
-                    return response()->json(Helper::formatStandardApiResponse('error', null, $results['error']), 500);
+
+                    // Grab the first row to display via ajax as the user picks fields
+                    $import->first_row = $sheetData[1];
+
+                    $date = date('Y-m-d-his');
+                    $fixed_filename = str_slug($file->getClientOriginalName());
+                    try {
+                        $file->move($path, $date.'-'.$fixed_filename);
+                    } catch (FileException $exception) {
+                        $results['error']=trans('admin/hardware/message.upload.error');
+                        if (config('app.debug')) {
+                            $results['error'].= ' ' . $exception->getMessage();
+                        }
+                        return response()->json(Helper::formatStandardApiResponse('error', null, $results['error']), 500);
+                    }
+                    $file_name = date('Y-m-d-his').'-'.$fixed_filename;
+                    $import->file_path = $file_name;
+                    $import->filesize = filesize($path.'/'.$file_name);
+                    $import->save();
+                    $results[] = $import;
+                } catch (InvalidArgumentException $e) {
+                    \Log::debug('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+                    $results['error'] .= ' ' . $e->getMessage();
+                } catch (Exception $e) {
+                    \Log::debug('Error processing file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+                    $results['error'] .= ' ' . $e->getMessage();
                 }
-                $file_name = date('Y-m-d-his').'-'.$fixed_filename;
-                $import->file_path = $file_name;
-                $import->filesize = filesize($path.'/'.$file_name);
-                $import->save();
-                $results[] = $import;
             }
             $results = (new ImportsTransformer)->transformImports($results);
             return [
