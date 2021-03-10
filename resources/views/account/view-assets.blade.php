@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-View Assets for  {{ $user->present()->fullName() }}
+View Components for  {{ $user->present()->fullName() }}
 @parent
 @stop
 

@@ -3,3 +3,10 @@ footer.main-footer {
     display: none;
 }
 
+.main-header {
+    height: 52px !important;
+}
+
+.content-wrapper {
+    min-height: calc(100vh - 52px) !important;
+}

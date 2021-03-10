@@ -21,7 +21,7 @@ return array(
     'update'                => 'Update Supplier',
     'url'                   => 'URL',
     'view'                  => 'View Supplier',
-    'view_assets_for'       => 'View Assets for',
+    'view_assets_for'       => 'View Components for',
     'zip'                   => 'Postal Code',
 
 );
