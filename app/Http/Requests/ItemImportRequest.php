@@ -43,6 +43,8 @@ class ItemImportRequest extends FormRequest
         $import->save();
         $fieldMappings=[];
 
+        $this->log('ItemImportRequest->import field_map: ' . var_export($import->field_map, true));
+
         if ($import->field_map) {
             foreach ($import->field_map as $field => $fieldValue) {
                 $errorMessage = null;
@@ -58,6 +60,9 @@ class ItemImportRequest extends FormRequest
             $fieldMappings = array_change_key_case(array_flip($import->field_map), CASE_LOWER);
                         // dd($fieldMappings);
         }
+
+        $this->log('ItemImportRequest->import $fieldMappings: ' . var_export($fieldMappings, true));
+
         $importer->setCallbacks([$this, 'log'], [$this, 'progress'], [$this, 'errorCallback'])
                  ->setUserId(Auth::id())
                  ->setUpdating($this->has('import-update'))

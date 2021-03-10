@@ -116,7 +116,7 @@
             </span>
                         </a>
                     </li>
-                    <li>
+<!--                    <li>
                         <a href="#components" data-toggle="tab">
             <span class="hidden-lg hidden-md">
               <i class="fa fa-hdd-o" aria-hidden="true"></i>
@@ -125,7 +125,7 @@
               {{ trans('general.components') }}
             </span>
                         </a>
-                    </li>
+                    </li>-->
                     <li>
                         <a href="#assets" data-toggle="tab">
             <span class="hidden-lg hidden-md">

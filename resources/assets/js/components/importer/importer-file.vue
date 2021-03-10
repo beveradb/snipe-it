@@ -117,6 +117,7 @@
                 },
                 columnOptions: {
                     general: [
+                        {id: '0', text: 'Skip' },
                         {id: 'category', text: 'Category' },
                         {id: 'company', text: 'Company' },
                         {id: 'email', text: 'Email' },

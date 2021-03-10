@@ -64,7 +64,5 @@ _ide_helper_models.php
 /.phplint-cache
 /localdata
 
-/bimtwin-custom/SampleCOBieSpreadsheet.xlsx
-/bimtwin-custom/SampleAssets.csv
-/bimtwin-custom/SampleAssetsFiveRows.csv
-/bimtwin-custom/SampleAssetsFiveRowsExcel.xlsx
+/bimtwin-custom/*.xlsx
+/bimtwin-custom/*.csv

@@ -239,6 +239,9 @@ class ItemImporter extends Importer
         $classname = class_basename(get_class($this));
         $item_type = strtolower(substr($classname, 0, strpos($classname, 'Importer')));
 
+        // TODO: Use categories properly for the COBie sub-sheets and remove this hack
+        if(starts_with($item_type, 'cobie_')) $item_type = 'asset';
+
         if (empty($asset_category)) {
             $asset_category = 'Unnamed Category';
         }
