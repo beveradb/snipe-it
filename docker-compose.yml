@@ -32,8 +32,8 @@ services:
       - ./database/seeds:/var/www/html/database/seeds
     environment:
       - APP_URL=http://localhost
-      - APP_DEBUG=true- APP_ENV=developement
-      - APP_ENV=developement
+#      - APP_DEBUG=true
+#      - APP_ENV=developement
       - APP_KEY=base64:glJpcM7BYwWiBggp3SQ/+NlRkqsBQMaGEOjemXqJzOF=
       - MYSQL_PORT_3306_TCP_ADDR=mysql
       - MYSQL_PORT_3306_TCP_PORT=3306

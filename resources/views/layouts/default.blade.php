@@ -135,7 +135,7 @@
                       </a>
                   </li>
                   @endcan
-                  @can('view', \App\Models\License::class)
+                  {{--@can('view', \App\Models\License::class)
                   <li aria-hidden="true"{!! (Request::is('licenses*') ? ' class="active"' : '') !!} tabindex="-1">
                       <a href="{{ route('licenses.index') }}" tabindex="-1">
                           <i class="fa fa-floppy-o"></i>
@@ -166,7 +166,7 @@
                           <span class="sr-only">Components</span>
                       </a>
                   </li>
-                  @endcan
+                  @endcan--}}
 
                   @can('index', \App\Models\Asset::class)
                   <li>
@@ -203,7 +203,7 @@
                               </a>
                       </li>
                        @endcan
-                       @can('create', \App\Models\License::class)
+                       {{--@can('create', \App\Models\License::class)
                        <li {!! (Request::is('licenses/create') ? 'class="active"' : '') !!}>
                            <a href="{{ route('licenses.create') }}" tabindex="-1">
                                <i class="fa fa-floppy-o fa-fw" aria-hidden="true"></i>
@@ -233,7 +233,7 @@
                            {{ trans('general.component') }}
                            </a>
                        </li>
-                       @endcan
+                       @endcan--}}
                          @can('create', \App\Models\User::class)
                              <li {!! (Request::is('users/create') ? 'class="active"' : '') !!}>
                                  <a href="{{ route('users.create') }}" tabindex="-1">
@@ -314,7 +314,7 @@
                              {{ trans('general.viewassets') }}
                        </a></li>
 
-                     <li {!! (Request::is('account/requested') ? ' class="active"' : '') !!}>
+<!--                     <li {!! (Request::is('account/requested') ? ' class="active"' : '') !!}>
                          <a href="{{ route('account.requested') }}">
                              <i class="fa fa-check fa-disk fa-fw" aria-hidden="true"></i>
                              Requested Assets
@@ -323,7 +323,7 @@
                          <a href="{{ route('account.accept') }}">
                              <i class="fa fa-check fa-disk fa-fw"></i>
                              Accept Assets
-                         </a></li>
+                         </a></li>-->
 
 
 
@@ -448,10 +448,10 @@
                           ({{ (isset($total_archived_sidebar)) ? $total_archived_sidebar : '' }})
                           </a>
                   </li>
-                    <li{!! (Request::query('status') == 'Requestable' ? ' class="active"' : '') !!}><a href="{{ url('hardware?status=Requestable') }}"><i class="fa fa-check text-blue"></i>
-                        {{ trans('admin/hardware/general.requestable') }}
-                        </a>
-                    </li>
+{{--                    <li{!! (Request::query('status') == 'Requestable' ? ' class="active"' : '') !!}><a href="{{ url('hardware?status=Requestable') }}"><i class="fa fa-check text-blue"></i>--}}
+{{--                        {{ trans('admin/hardware/general.requestable') }}--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
                     @can('audit', \App\Models\Asset::class)
                         <li{!! (Request::is('hardware/audit/due') ? ' class="active"' : '') !!}>
@@ -467,7 +467,7 @@
                     @endcan
 
                   <li class="divider">&nbsp;</li>
-                    @can('checkout', \App\Models\Asset::class)
+                    {{--@can('checkout', \App\Models\Asset::class)
                     <li{!! (Request::is('hardware/bulkcheckout') ? ' class="active"' : '') !!}>
                         <a href="{{ route('hardware/bulkcheckout') }}">
                             {{ trans('general.bulk_checkout') }}
@@ -477,7 +477,7 @@
                         <a href="{{ route('assets.requested') }}">
                             {{ trans('general.requested') }}</a>
                     </li>
-                    @endcan
+                    @endcan--}}
 
                     @can('create', \App\Models\Asset::class)
                       <li{!! (Request::query('Deleted') ? ' class="active"' : '') !!}>

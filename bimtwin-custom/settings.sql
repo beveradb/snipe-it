@@ -31,3 +31,7 @@ VALUES (1, '2021-03-09 22:58:41', '2021-03-09 22:58:53', null, 20, 'BIM Twin', n
         0, null, 8, null, null, 0, null, 1, 0, 0, null, 'on', null, 'image,category,manufacturer,model_number', 0, 0,
         '', '', 1, null, 0, null, 'on', 0, 0, 'default', null, null, null, 0, '', 0, 0, null, null, 0, 0, null, null,
         null, '1234.56');
+
+TRUNCATE custom_fieldsets;
+TRUNCATE custom_fields_custom_fieldsets;
+TRUNCATE custom_field_custom_fieldset;

@@ -121,172 +121,172 @@ View Assets for  {{ $user->present()->fullName() }}
   </div> <!-- .col-md-12-->
 </div> <!-- .row-->
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="box box-default">
-      @if ($user->id)
-        <div class="box-header with-border">
-          <div class="box-heading">
-            <h2 class="box-title"> {{ trans('admin/users/general.software_user', array('name' => $user->first_name)) }}</h2>
-          </div>
-        </div><!-- /.box-header -->
-      @endif
+{{--<div class="row">--}}
+{{--  <div class="col-md-12">--}}
+{{--    <div class="box box-default">--}}
+{{--      @if ($user->id)--}}
+{{--        <div class="box-header with-border">--}}
+{{--          <div class="box-heading">--}}
+{{--            <h2 class="box-title"> {{ trans('admin/users/general.software_user', array('name' => $user->first_name)) }}</h2>--}}
+{{--          </div>--}}
+{{--        </div><!-- /.box-header -->--}}
+{{--      @endif--}}
 
-      <div class="box-body">
-        <!-- checked out licenses table -->
+{{--      <div class="box-body">--}}
+{{--        <!-- checked out licenses table -->--}}
 
-        <div class="table-responsive">
-          <table
-                  data-cookie-id-table="userLicenses"
-                  data-pagination="true"
-                  data-id-table="userLicenses"
-                  data-search="true"
-                  data-side-pagination="client"
-                  data-show-columns="true"
-                  data-show-export="true"
-                  data-show-refresh="true"
-                  data-sort-order="asc"
-                  id="userLicenses"
-                  class="table table-striped snipe-table"
-                  data-export-options='{
-                  "fileName": "my-licenses-{{ date('Y-m-d') }}",
-                  "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                  }'>
-            <thead>
-              <tr>
-                <th class="col-md-4">{{ trans('general.name') }}</th>
-                <th class="col-md-4">{{ trans('admin/hardware/form.serial') }}</th>
-                <th class="col-md-4">{{ trans('general.category') }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($user->licenses as $license)
-              <tr>
-                <td>{{ $license->name }}</td>
-                <td>
-                  @can('viewKeys', $license)
-                    {{ $license->serial }}
-                  @else
-                    ------------
-                  @endcan
-                </td>
-                <td>{{ $license->category->name }}</td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div> <!-- .table-responsive-->
-      </div> <!-- .box-body-->
-    </div><!--.box.box-default-->
-  </div> <!-- .col-md-12-->
-</div> <!-- .row-->
+{{--        <div class="table-responsive">--}}
+{{--          <table--}}
+{{--                  data-cookie-id-table="userLicenses"--}}
+{{--                  data-pagination="true"--}}
+{{--                  data-id-table="userLicenses"--}}
+{{--                  data-search="true"--}}
+{{--                  data-side-pagination="client"--}}
+{{--                  data-show-columns="true"--}}
+{{--                  data-show-export="true"--}}
+{{--                  data-show-refresh="true"--}}
+{{--                  data-sort-order="asc"--}}
+{{--                  id="userLicenses"--}}
+{{--                  class="table table-striped snipe-table"--}}
+{{--                  data-export-options='{--}}
+{{--                  "fileName": "my-licenses-{{ date('Y-m-d') }}",--}}
+{{--                  "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]--}}
+{{--                  }'>--}}
+{{--            <thead>--}}
+{{--              <tr>--}}
+{{--                <th class="col-md-4">{{ trans('general.name') }}</th>--}}
+{{--                <th class="col-md-4">{{ trans('admin/hardware/form.serial') }}</th>--}}
+{{--                <th class="col-md-4">{{ trans('general.category') }}</th>--}}
+{{--              </tr>--}}
+{{--            </thead>--}}
+{{--            <tbody>--}}
+{{--              @foreach ($user->licenses as $license)--}}
+{{--              <tr>--}}
+{{--                <td>{{ $license->name }}</td>--}}
+{{--                <td>--}}
+{{--                  @can('viewKeys', $license)--}}
+{{--                    {{ $license->serial }}--}}
+{{--                  @else--}}
+{{--                    --------------}}
+{{--                  @endcan--}}
+{{--                </td>--}}
+{{--                <td>{{ $license->category->name }}</td>--}}
+{{--              </tr>--}}
+{{--              @endforeach--}}
+{{--            </tbody>--}}
+{{--          </table>--}}
+{{--        </div> <!-- .table-responsive-->--}}
+{{--      </div> <!-- .box-body-->--}}
+{{--    </div><!--.box.box-default-->--}}
+{{--  </div> <!-- .col-md-12-->--}}
+{{--</div> <!-- .row-->--}}
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="box box-default">
-      @if ($user->id)
-      <div class="box-header with-border">
-        <div class="box-heading">
-          <h2 class="box-title"> {{ trans('general.consumables') }} </h2>
-        </div>
-      </div><!-- /.box-header -->
-      @endif
+{{--<div class="row">--}}
+{{--  <div class="col-md-12">--}}
+{{--    <div class="box box-default">--}}
+{{--      @if ($user->id)--}}
+{{--      <div class="box-header with-border">--}}
+{{--        <div class="box-heading">--}}
+{{--          <h2 class="box-title"> {{ trans('general.consumables') }} </h2>--}}
+{{--        </div>--}}
+{{--      </div><!-- /.box-header -->--}}
+{{--      @endif--}}
 
-      <div class="box-body">
-        <!-- checked out consumables table -->
-        <div class="table-responsive">
-          <table
-                  data-cookie-id-table="userConsumables"
-                  data-pagination="true"
-                  data-id-table="userConsumables"
-                  data-search="true"
-                  data-side-pagination="client"
-                  data-show-columns="true"
-                  data-show-export="true"
-                  data-show-refresh="true"
-                  data-sort-order="asc"
-                  id="userConsumables"
-                  class="table table-striped snipe-table"
-                  data-export-options='{
-                  "fileName": "my-consumables-{{ date('Y-m-d') }}",
-                  "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                  }'>
-            <thead>
-              <tr>
-                <th class="col-md-8">{{ trans('general.name') }}</th>
-                <th class="col-md-4">{{ trans('general.category') }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($user->consumables as $consumable)
-              <tr>
-                <td>{{ $consumable->name }}</td>
-                <td>{{ $consumable->category->name }}</td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
+{{--      <div class="box-body">--}}
+{{--        <!-- checked out consumables table -->--}}
+{{--        <div class="table-responsive">--}}
+{{--          <table--}}
+{{--                  data-cookie-id-table="userConsumables"--}}
+{{--                  data-pagination="true"--}}
+{{--                  data-id-table="userConsumables"--}}
+{{--                  data-search="true"--}}
+{{--                  data-side-pagination="client"--}}
+{{--                  data-show-columns="true"--}}
+{{--                  data-show-export="true"--}}
+{{--                  data-show-refresh="true"--}}
+{{--                  data-sort-order="asc"--}}
+{{--                  id="userConsumables"--}}
+{{--                  class="table table-striped snipe-table"--}}
+{{--                  data-export-options='{--}}
+{{--                  "fileName": "my-consumables-{{ date('Y-m-d') }}",--}}
+{{--                  "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]--}}
+{{--                  }'>--}}
+{{--            <thead>--}}
+{{--              <tr>--}}
+{{--                <th class="col-md-8">{{ trans('general.name') }}</th>--}}
+{{--                <th class="col-md-4">{{ trans('general.category') }}</th>--}}
+{{--              </tr>--}}
+{{--            </thead>--}}
+{{--            <tbody>--}}
+{{--              @foreach ($user->consumables as $consumable)--}}
+{{--              <tr>--}}
+{{--                <td>{{ $consumable->name }}</td>--}}
+{{--                <td>{{ $consumable->category->name }}</td>--}}
+{{--              </tr>--}}
+{{--              @endforeach--}}
+{{--            </tbody>--}}
+{{--          </table>--}}
+{{--        </div>--}}
 
 
-      </div> <!-- .box-body-->
-    </div><!--.box.box-default-->
-  </div> <!-- .col-md-12-->
-</div> <!-- .row-->
+{{--      </div> <!-- .box-body-->--}}
+{{--    </div><!--.box.box-default-->--}}
+{{--  </div> <!-- .col-md-12-->--}}
+{{--</div> <!-- .row-->--}}
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="box box-default">
+{{--<div class="row">--}}
+{{--  <div class="col-md-12">--}}
+{{--    <div class="box box-default">--}}
 
-      @if ($user->id)
-      <div class="box-header with-border">
-        <div class="box-heading">
-          <h2 class="box-title"> {{ trans('general.accessories') }}</h2>
-        </div>
-      </div><!-- /.box-header -->
-      @endif
+{{--      @if ($user->id)--}}
+{{--      <div class="box-header with-border">--}}
+{{--        <div class="box-heading">--}}
+{{--          <h2 class="box-title"> {{ trans('general.accessories') }}</h2>--}}
+{{--        </div>--}}
+{{--      </div><!-- /.box-header -->--}}
+{{--      @endif--}}
 
-      <div class="box-body">
-        <!-- checked out Accessories table -->
+{{--      <div class="box-body">--}}
+{{--        <!-- checked out Accessories table -->--}}
 
-        <div class="table-responsive">
-          <table
-                  data-cookie-id-table="userAccessories"
-                  data-pagination="true"
-                  data-id-table="userAccessories"
-                  data-search="true"
-                  data-side-pagination="client"
-                  data-show-columns="true"
-                  data-show-export="true"
-                  data-show-refresh="true"
-                  data-sort-order="asc"
-                  id="userAccessories"
-                  class="table table-striped snipe-table"
-                  data-export-options='{
-                  "fileName": "my-accessories-{{ date('Y-m-d') }}",
-                  "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                  }'>
-            <thead>
-              <tr>
-                <th class="col-md-8">{{ trans('general.name') }}</th>
-                <th class="col-md-4">{{ trans('general.category') }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($user->accessories as $accessory)
-              <tr>
-                <td>{{ $accessory->name }}</td>
-                <td>{{ $accessory->category->name }}</td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
+{{--        <div class="table-responsive">--}}
+{{--          <table--}}
+{{--                  data-cookie-id-table="userAccessories"--}}
+{{--                  data-pagination="true"--}}
+{{--                  data-id-table="userAccessories"--}}
+{{--                  data-search="true"--}}
+{{--                  data-side-pagination="client"--}}
+{{--                  data-show-columns="true"--}}
+{{--                  data-show-export="true"--}}
+{{--                  data-show-refresh="true"--}}
+{{--                  data-sort-order="asc"--}}
+{{--                  id="userAccessories"--}}
+{{--                  class="table table-striped snipe-table"--}}
+{{--                  data-export-options='{--}}
+{{--                  "fileName": "my-accessories-{{ date('Y-m-d') }}",--}}
+{{--                  "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]--}}
+{{--                  }'>--}}
+{{--            <thead>--}}
+{{--              <tr>--}}
+{{--                <th class="col-md-8">{{ trans('general.name') }}</th>--}}
+{{--                <th class="col-md-4">{{ trans('general.category') }}</th>--}}
+{{--              </tr>--}}
+{{--            </thead>--}}
+{{--            <tbody>--}}
+{{--              @foreach ($user->accessories as $accessory)--}}
+{{--              <tr>--}}
+{{--                <td>{{ $accessory->name }}</td>--}}
+{{--                <td>{{ $accessory->category->name }}</td>--}}
+{{--              </tr>--}}
+{{--              @endforeach--}}
+{{--            </tbody>--}}
+{{--          </table>--}}
+{{--        </div>--}}
 
-       </div> <!-- .box-body-->
-    </div><!--.box.box-default-->
-  </div> <!-- .col-md-12-->
-</div> <!-- .row-->
+{{--       </div> <!-- .box-body-->--}}
+{{--    </div><!--.box.box-default-->--}}
+{{--  </div> <!-- .col-md-12-->--}}
+{{--</div> <!-- .row-->--}}
 
 <div class="row">
   <div class="col-md-12">
