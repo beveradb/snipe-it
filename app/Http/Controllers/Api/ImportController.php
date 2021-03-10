@@ -48,11 +48,12 @@ class ImportController extends Controller
             foreach ($files as $file) {
                 if (!in_array($file->getMimeType(), array(
                     'application/vnd.ms-excel',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     'text/csv',
                     'text/plain',
                     'text/comma-separated-values',
                     'text/tsv'))) {
-                    $results['error']='File type must be CSV';
+                    $results['error']='File type must be CSV, XLS or XLSX';
                     return response()->json(Helper::formatStandardApiResponse('error', null, $results['error']), 500);
                 }
 
@@ -60,6 +61,10 @@ class ImportController extends Controller
                 if (! ini_get("auto_detect_line_endings")) {
                     ini_set("auto_detect_line_endings", '1');
                 }
+
+                // TODO: if file is XLSX, decode to CSV
+
+
                 $reader = Reader::createFromFileObject($file->openFile('r')); //file pointer leak?
                 $import->header_row = $reader->fetchOne(0);
 
