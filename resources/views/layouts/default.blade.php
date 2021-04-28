@@ -509,6 +509,15 @@
               </li>
               @endcan
 
+            @can('view', \App\Models\Floor::class)
+                <li{!! (Request::is('floors*') ? ' class="active"' : '') !!}>
+                    <a href="{{ route('floors.index') }}">
+                        <i class="fa fa-building"></i>
+                        <span>{{ trans('general.floors') }}</span>
+                    </a>
+                </li>
+            @endcan
+
             @can('view', \App\Models\User::class)
             <li{!! (Request::is('users*') ? ' class="active"' : '') !!}>
                   <a href="{{ route('users.index') }}">

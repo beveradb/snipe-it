@@ -495,6 +495,7 @@ class Helper
             'asset' => 'Asset',
             'consumable' => 'Consumable',
             'component' => 'Component',
+            'floor' => 'Floor',
             'license' => 'License'
         );
         return $category_types;

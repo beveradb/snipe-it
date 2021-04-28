@@ -102,6 +102,8 @@
     'file_name'				=> 'File',
     'file_type'             => 'File Type',
     'file_uploads'			=> 'File Uploads',
+    'floor'			        => 'Floor',
+    'floors'			    => 'Floors',
     'generate'				=> 'Generate',
      'github_markdown'      => 'This field accepts <a href="https://help.github.com/articles/github-flavored-markdown/">Github flavoured markdown</a>.',
     'groups'				=> 'Groups',

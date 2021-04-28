@@ -263,6 +263,45 @@ Route::group(['prefix' => 'v1','namespace' => 'Api', 'middleware' => 'auth:api']
         );
     });
 
+    /*--- Floors API ---*/
+    Route::get('floors/selectlist',
+        [
+            'as' => 'api.floors.selectlist',
+            'uses'=> 'FloorsController@selectlist'
+        ]
+    );
+
+    Route::resource('floors', 'FloorsController',
+        [
+            'names' =>
+                [
+                    'index' => 'api.floors.index',
+                    'show' => 'api.floors.show',
+                    'store' => 'api.floors.store',
+                    'update' => 'api.floors.update',
+                    'destroy' => 'api.floors.destroy'
+                ],
+            'except' => ['create', 'edit'],
+            'parameters' => ['floor' => 'floor_id']
+        ]
+    ); // Floors resource
+
+    Route::group(['prefix' => 'floors'], function () {
+        Route::get('view/{id}/users',
+            [
+                'as' => 'api.floors.showUsers',
+                'uses' => 'FloorsController@getDataView'
+            ]
+        );
+
+        Route::post('{floor}/checkout',
+            [
+                'as' => 'api.floors.checkout',
+                'uses' => 'FloorsController@checkout'
+            ]
+        );
+    });
+
     /*--- Depreciations API ---*/
 
     Route::resource('depreciations', 'DepreciationsController',
