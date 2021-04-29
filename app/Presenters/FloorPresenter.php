@@ -57,74 +57,36 @@ class FloorPresenter extends Presenter
                 "title" => trans('general.category'),
                 "formatter" => "categoriesLinkObjFormatter"
             ],[
-                "field" => "model_number",
+                "field" => "ext_system",
                 "searchable" => true,
                 "sortable" => true,
-                "title" => trans('general.model_no'),
+                "title" => trans('general.ext_system'),
             ],[
-                "field" => "item_no",
+                "field" => "ext_object",
                 "searchable" => true,
                 "sortable" => true,
-                "title" => trans('admin/floors/general.item_no')
-            ], [
-                "field" => "qty",
-                "searchable" => false,
-                "sortable" => false,
-                "title" => trans('admin/components/general.total'),
-                "visible" => true,
-            ], [
-                "field" => "remaining",
-                "searchable" => false,
-                "sortable" => false,
-                "title" => trans('admin/components/general.remaining'),
-                "visible" => true,
-            ], [
-                "field" => "min_amt",
-                "searchable" => false,
-                "sortable" => false,
-                "title" => trans('general.min_amt'),
-                "visible" => true,
-            ],  [
-                "field" => "location",
-                "searchable" => true,
-                "sortable" => true,
-                "title" => trans('general.location'),
-                "formatter" => "locationsLinkObjFormatter"
-            ], [
-                "field" => "manufacturer",
-                "searchable" => true,
-                "sortable" => true,
-                "title" => trans('general.manufacturer'),
-                "visible" => false,
-                "formatter" => "manufacturersLinkObjFormatter"
-            ], [
-                "field" => "order_number",
-                "searchable" => true,
-                "sortable" => true,
-                "title" => trans('general.order_number'),
-                "visible" => true,
+                "title" => trans('general.ext_object')
             ],[
-                "field" => "purchase_date",
+                "field" => "ext_identifier",
                 "searchable" => true,
                 "sortable" => true,
-                "title" => trans('general.purchase_date'),
-                "visible" => true,
-                "formatter" => "dateDisplayFormatter",
+                "title" => trans('general.ext_identifier')
             ],[
-                "field" => "purchase_cost",
+                "field" => "description",
                 "searchable" => true,
                 "sortable" => true,
-                "title" => trans('general.purchase_cost'),
-                "visible" => true,
-                "footerFormatter" => 'sumFormatter',
+                "title" => trans('general.description')
             ],[
-                "field" => "change",
-                "searchable" => false,
-                "sortable" => false,
-                "visible" => true,
-                "title" => trans('general.change'),
-                "formatter" => "floorsInOutFormatter",
-            ], [
+                "field" => "elevation",
+                "searchable" => true,
+                "sortable" => true,
+                "title" => trans('general.elevation')
+            ],[
+                "field" => "height",
+                "searchable" => true,
+                "sortable" => true,
+                "title" => trans('general.height')
+            ],[
                 "field" => "actions",
                 "searchable" => false,
                 "sortable" => false,

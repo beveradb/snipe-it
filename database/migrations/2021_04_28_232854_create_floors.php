@@ -29,21 +29,17 @@ class CreateFloors extends Migration
 
             $table->increments('id');
             $table->string('name')->nullable()->default(null);
-            $table->integer('category_id')->nullable()->default(null);
-            $table->integer('location_id')->nullable()->default(null);
             $table->integer('user_id')->nullable()->default(null);
-            $table->integer('qty')->default(0);
-            $table->boolean('requestable')->default(0);
+            $table->integer('company_id')->unsigned()->nullable()->default(null);;
+            $table->integer('category_id')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
-            $table->date('purchase_date')->nullable();
-            $table->decimal('purchase_cost', 20, 2)->nullable()->default(null);
-            $table->string('order_number')->nullable();
-            $table->integer('company_id')->unsigned()->nullable();
-            $table->integer('min_amt')->nullable()->default(null);
-            $table->integer('model_number')->nullable()->default(null);
-            $table->integer('manufacturer_id')->nullable()->default(null);
-            $table->string('item_no')->nullable()->default(null);
+            $table->string('ext_system')->nullable()->default(null);
+            $table->string('ext_object')->nullable()->default(null);
+            $table->string('ext_identifier')->nullable()->default(null);
+            $table->string('description')->nullable()->default(null);
+            $table->decimal('elevation', 20, 2)->nullable()->default(null);
+            $table->decimal('height', 20, 2)->nullable()->default(null);
             $table->string('image')->nullable()->default(null);
 
             $table->engine = 'InnoDB';

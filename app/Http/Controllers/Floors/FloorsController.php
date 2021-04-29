@@ -65,20 +65,17 @@ class FloorsController extends Controller
     {
         $this->authorize('create', Floor::class);
         $floor = new Floor();
-        $floor->name                   = $request->input('name');
-        $floor->category_id            = $request->input('category_id');
-        $floor->location_id            = $request->input('location_id');
-        $floor->company_id             = Company::getIdForCurrentUser($request->input('company_id'));
-        $floor->order_number           = $request->input('order_number');
-        $floor->min_amt                = $request->input('min_amt');
-        $floor->manufacturer_id        = $request->input('manufacturer_id');
-        $floor->model_number           = $request->input('model_number');
-        $floor->item_no                = $request->input('item_no');
-        $floor->purchase_date          = $request->input('purchase_date');
-        $floor->purchase_cost          = Helper::ParseFloat($request->input('purchase_cost'));
-        $floor->qty                    = $request->input('qty');
-        $floor->user_id                = Auth::id();
 
+        $floor->name           = $request->input('name');
+        $floor->user_id        = Auth::id();
+        $floor->company_id     = Company::getIdForCurrentUser($request->input('company_id'));
+        $floor->category_id    = $request->input('category_id');
+        $floor->ext_system     = $request->input('ext_system');
+        $floor->ext_object     = $request->input('ext_object');
+        $floor->ext_identifier = $request->input('ext_identifier');
+        $floor->description    = $request->input('description');
+        $floor->elevation      = Helper::ParseFloat($request->input('elevation'));
+        $floor->height         = Helper::ParseFloat($request->input('height'));
 
         $floor = $request->handleImages($floor);
 
@@ -131,18 +128,15 @@ class FloorsController extends Controller
 
         $this->authorize($floor);
 
-        $floor->name                   = $request->input('name');
-        $floor->category_id            = $request->input('category_id');
-        $floor->location_id            = $request->input('location_id');
-        $floor->company_id             = Company::getIdForCurrentUser($request->input('company_id'));
-        $floor->order_number           = $request->input('order_number');
-        $floor->min_amt                = $request->input('min_amt');
-        $floor->manufacturer_id        = $request->input('manufacturer_id');
-        $floor->model_number           = $request->input('model_number');
-        $floor->item_no                = $request->input('item_no');
-        $floor->purchase_date          = $request->input('purchase_date');
-        $floor->purchase_cost          = Helper::ParseFloat($request->input('purchase_cost'));
-        $floor->qty                    = Helper::ParseFloat($request->input('qty'));
+        $floor->name           = $request->input('name');
+        $floor->company_id     = Company::getIdForCurrentUser($request->input('company_id'));
+        $floor->category_id    = $request->input('category_id');
+        $floor->ext_system     = $request->input('ext_system');
+        $floor->ext_object     = $request->input('ext_object');
+        $floor->ext_identifier = $request->input('ext_identifier');
+        $floor->description    = $request->input('description');
+        $floor->elevation      = Helper::ParseFloat($request->input('elevation'));
+        $floor->height         = Helper::ParseFloat($request->input('height'));
 
         $floor = $request->handleImages($floor);
 

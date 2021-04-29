@@ -26,7 +26,7 @@ class FloorsController extends Controller
         $this->authorize('index', Floor::class);
         $floors = Company::scopeCompanyables(
             Floor::select('floors.*')
-                ->with('company', 'location', 'category', 'users', 'manufacturer')
+                ->with('company', 'category', 'users')
         );
 
         if ($request->filled('search')) {
@@ -41,10 +41,6 @@ class FloorsController extends Controller
             $floors->where('category_id','=',$request->input('category_id'));
         }
 
-        if ($request->filled('manufacturer_id')) {
-            $floors->where('manufacturer_id','=',$request->input('manufacturer_id'));
-        }
-
 
         // Set the offset to the API call's offset, unless the offset is higher than the actual count of items in which
         // case we override with the actual count, so we should return 0 items.
@@ -53,7 +49,7 @@ class FloorsController extends Controller
         // Check to make sure the limit is not higher than the max allowed
         ((config('app.max_results') >= $request->input('limit')) && ($request->filled('limit'))) ? $limit = $request->input('limit') : $limit = config('app.max_results');
 
-        $allowed_columns = ['id','name','order_number','min_amt','purchase_date','purchase_cost','company','category','model_number', 'item_no', 'manufacturer','location','qty','image'];
+        $allowed_columns = ['id','name','company','category','created_at', 'ext_system', 'ext_object','ext_identifier','description','elevation','height','image'];
         $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
         $sort = in_array($request->input('sort'), $allowed_columns) ? $request->input('sort') : 'created_at';
 
@@ -61,12 +57,6 @@ class FloorsController extends Controller
         switch ($sort) {
             case 'category':
                 $floors = $floors->OrderCategory($order);
-                break;
-            case 'location':
-                $floors = $floors->OrderLocation($order);
-                break;
-            case 'manufacturer':
-                $floors = $floors->OrderManufacturer($order);
                 break;
             case 'company':
                 $floors = $floors->OrderCompany($order);
