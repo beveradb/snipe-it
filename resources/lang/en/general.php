@@ -223,6 +223,7 @@
     'total_licenses'		=> 'total licenses',
     'total_accessories'		=> 'total accessories',
     'total_consumables'		=> 'total consumables',
+    'total_floors'		    => 'total floors',
     'type'  				=> 'Type',
     'undeployable'			=> 'Un-deployable',
     'unknown_admin'			=> 'Unknown Admin',

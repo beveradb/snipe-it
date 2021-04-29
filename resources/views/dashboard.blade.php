@@ -47,6 +47,24 @@
       </a>
   </div><!-- ./col -->
 
+  <div class="col-lg-3 col-xs-6">
+      <a href="{{ route('floors.index') }}">
+    <!-- small box -->
+    <div class="small-box bg-maroon">
+      <div class="inner">
+        <h3>{{ number_format($counts['floor']) }}</h3>
+        <p>{{ trans('general.total_floors') }}</p>
+      </div>
+      <div class="icon" aria-hidden="true">
+        <i class="fa fa-building" aria-hidden="true"></i>
+      </div>
+      @can('index', \App\Models\Floor::class)
+        <a href="{{ route('floors.index') }}" class="small-box-footer">{{ trans('general.moreinfo') }} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+      @endcan
+    </div>
+      </a>
+  </div><!-- ./col -->
+
 {{--  <div class="col-lg-3 col-xs-6">--}}
 {{--     <a href="{{ route('licenses.index') }}">--}}
 {{--    <!-- small box -->--}}
