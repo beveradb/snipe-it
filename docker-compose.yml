@@ -1,0 +1,53 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5
+    container_name: snipe_mysql
+    restart: always
+    volumes:
+      - ./localdata/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=snipemysqlrootpassword
+      - MYSQL_USER=snipe
+      - MYSQL_PASSWORD=snipemysqlpassword
+      - MYSQL_DATABASE=snipe
+  snipeit:
+    image: snipe-it-local:latest
+    container_name: snipe
+    depends_on:
+      - mysql
+    volumes:
+      - ./localdata/config:/config
+      - ./localdata/dumps:/var/lib/snipeit/dumps
+#      - ./localdata/private_uploads:/var/lib/snipeit/data/private_uploads
+#      - ./localdata/uploads:/var/lib/snipeit/data/uploads
+      - ./localdata/storage-logs:/var/www/html/storage/logs
+      - ./app:/var/www/html/app
+      - ./routes:/var/www/html/routes
+      - ./public:/var/www/html/public
+      - ./resources:/var/www/html/resources
+      - ./database/migrations:/var/www/html/database/migrations
+      - ./database/seeds:/var/www/html/database/seeds
+    environment:
+      - APP_URL=http://localhost
+      - APP_DEBUG=true
+      - APP_ENV=developement
+      - APP_KEY=base64:glJpcM7BYwWiBggp3SQ/+NlRkqsBQMaGEOjemXqJzOF=
+      - MYSQL_PORT_3306_TCP_ADDR=mysql
+      - MYSQL_PORT_3306_TCP_PORT=3306
+      - MYSQL_DATABASE=snipe
+      - MYSQL_USER=snipe
+      - MYSQL_PASSWORD=snipemysqlpassword
+      - MAIL_ENV_FROM_ADDR=
+      - MAIL_ENV_FROM_NAME=BIM Twin
+      - MAIL_ENV_ENCRYPTION=tls
+      - MAIL_PORT_587_TCP_ADDR=
+      - MAIL_PORT_587_TCP_PORT=587
+      - MAIL_ENV_USERNAME=
+      - MAIL_ENV_PASSWORD=
+      - PGID=1000
+      - PUID=1000
+    ports:
+      - "80:80"

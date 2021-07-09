@@ -146,8 +146,15 @@ class SettingsServiceProvider extends ServiceProvider
         \App::singleton('components_upload_url', function(){
             return 'components/';
         });
+        
+        // Floors paths and URLs
+        \App::singleton('floors_upload_path', function(){
+            return 'floors/';
+        });
 
-
+        \App::singleton('floors_upload_url', function(){
+            return 'floors/';
+        });
 
         // Set the monetary locale to the configured locale to make helper::parseFloat work.
         setlocale(LC_MONETARY, config('app.locale'));

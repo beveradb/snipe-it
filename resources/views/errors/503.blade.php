@@ -23,7 +23,7 @@ System Unavailable
 <div class="row">
   <div class="col-md-9 col-md-offset-1">
     <div class="col-md-2">
-      <img src="{{ url('/') }}/img/sad-panda.png" class="pull-right" style="width: 140px; height: 140px;">
+      <img src="{{ url('/') }}/img/sad-house.png" class="pull-right" style="width: 140px; height: 140px;">
     </div>
     <div class="col-md-10">
       <div class="callout callout-danger">

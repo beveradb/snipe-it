@@ -3,7 +3,7 @@
 return array(
     'activated'  			=> 'Active',
     'allow'  				=> 'Allow',
-    'checkedout'  			=> 'Assets',
+    'checkedout'  			=> 'Components',
     'created_at' 			=> 'Created',
     'createuser' 			=> 'Create User',
     'deny'  				=> 'Deny',

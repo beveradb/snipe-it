@@ -2,7 +2,7 @@
 
 return array(
 
-    'asset'             => 'Asset',
+    'asset'             => 'Component',
     'checkin'           => 'Checkin',
     'create'            => 'Create License',
     'expiration'        => 'Expiration Date',

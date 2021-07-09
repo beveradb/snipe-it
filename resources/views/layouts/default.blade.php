@@ -31,6 +31,7 @@
 
     <link rel="stylesheet" href="{{ url(mix('css/dist/all.css')) }}">
     <link rel="stylesheet" href="{{ url(mix('css/dist/skins/skin-'.($snipeSettings->skin!='' ? $snipeSettings->skin : 'blue').'.css')) }}">
+    <link rel="stylesheet" href="{{ url('css/custom.css') }}">
 
 
 
@@ -107,16 +108,12 @@
               <div class="left-navblock">
                  @if ($snipeSettings->brand == '3')
                       <a class="logo navbar-brand no-hover" href="{{ url('/') }}">
-                          @if ($snipeSettings->logo!='')
-                          <img class="navbar-brand-img" src="{{ Storage::disk('public')->url('/').e($snipeSettings->logo) }}" alt="{{ $snipeSettings->site_name }} logo">
-                          @endif
+                          <img class="navbar-brand-img" src="{{ ($snipeSettings) && ($snipeSettings->logo!='') ? Storage::disk('public')->url(e($snipeSettings->logo)) : '/img/logo.png' }}" alt="{{ $snipeSettings->site_name }} logo">
                           {{ $snipeSettings->site_name }}
                       </a>
                   @elseif ($snipeSettings->brand == '2')
                       <a class="logo navbar-brand no-hover" href="{{ url('/') }}">
-                          @if ($snipeSettings->logo!='')
-                            <img class="navbar-brand-img" src="{{ Storage::disk('public')->url('/').e($snipeSettings->logo) }}" alt="{{ $snipeSettings->site_name }} logo">
-                          @endif
+                          <img class="navbar-brand-img" src="{{ ($snipeSettings) && ($snipeSettings->logo!='') ? Storage::disk('public')->url(e($snipeSettings->logo)) : '/img/logo.png' }}" alt="{{ $snipeSettings->site_name }} logo">
                           <span class="sr-only">{{ $snipeSettings->site_name }}</span>
                       </a>
                   @else
@@ -138,7 +135,7 @@
                       </a>
                   </li>
                   @endcan
-                  @can('view', \App\Models\License::class)
+                  {{--@can('view', \App\Models\License::class)
                   <li aria-hidden="true"{!! (Request::is('licenses*') ? ' class="active"' : '') !!} tabindex="-1">
                       <a href="{{ route('licenses.index') }}" tabindex="-1">
                           <i class="fa fa-floppy-o"></i>
@@ -169,7 +166,7 @@
                           <span class="sr-only">Components</span>
                       </a>
                   </li>
-                  @endcan
+                  @endcan--}}
 
                   @can('index', \App\Models\Asset::class)
                   <li>
@@ -206,7 +203,7 @@
                               </a>
                       </li>
                        @endcan
-                       @can('create', \App\Models\License::class)
+                       {{--@can('create', \App\Models\License::class)
                        <li {!! (Request::is('licenses/create') ? 'class="active"' : '') !!}>
                            <a href="{{ route('licenses.create') }}" tabindex="-1">
                                <i class="fa fa-floppy-o fa-fw" aria-hidden="true"></i>
@@ -236,7 +233,7 @@
                            {{ trans('general.component') }}
                            </a>
                        </li>
-                       @endcan
+                       @endcan--}}
                          @can('create', \App\Models\User::class)
                              <li {!! (Request::is('users/create') ? 'class="active"' : '') !!}>
                                  <a href="{{ route('users.create') }}" tabindex="-1">
@@ -317,7 +314,7 @@
                              {{ trans('general.viewassets') }}
                        </a></li>
 
-                     <li {!! (Request::is('account/requested') ? ' class="active"' : '') !!}>
+<!--                     <li {!! (Request::is('account/requested') ? ' class="active"' : '') !!}>
                          <a href="{{ route('account.requested') }}">
                              <i class="fa fa-check fa-disk fa-fw" aria-hidden="true"></i>
                              Requested Assets
@@ -326,7 +323,7 @@
                          <a href="{{ route('account.accept') }}">
                              <i class="fa fa-check fa-disk fa-fw"></i>
                              Accept Assets
-                         </a></li>
+                         </a></li>-->
 
 
 
@@ -451,10 +448,10 @@
                           ({{ (isset($total_archived_sidebar)) ? $total_archived_sidebar : '' }})
                           </a>
                   </li>
-                    <li{!! (Request::query('status') == 'Requestable' ? ' class="active"' : '') !!}><a href="{{ url('hardware?status=Requestable') }}"><i class="fa fa-check text-blue"></i>
-                        {{ trans('admin/hardware/general.requestable') }}
-                        </a>
-                    </li>
+{{--                    <li{!! (Request::query('status') == 'Requestable' ? ' class="active"' : '') !!}><a href="{{ url('hardware?status=Requestable') }}"><i class="fa fa-check text-blue"></i>--}}
+{{--                        {{ trans('admin/hardware/general.requestable') }}--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
                     @can('audit', \App\Models\Asset::class)
                         <li{!! (Request::is('hardware/audit/due') ? ' class="active"' : '') !!}>
@@ -470,7 +467,7 @@
                     @endcan
 
                   <li class="divider">&nbsp;</li>
-                    @can('checkout', \App\Models\Asset::class)
+                    {{--@can('checkout', \App\Models\Asset::class)
                     <li{!! (Request::is('hardware/bulkcheckout') ? ' class="active"' : '') !!}>
                         <a href="{{ route('hardware/bulkcheckout') }}">
                             {{ trans('general.bulk_checkout') }}
@@ -480,7 +477,7 @@
                         <a href="{{ route('assets.requested') }}">
                             {{ trans('general.requested') }}</a>
                     </li>
-                    @endcan
+                    @endcan--}}
 
                     @can('create', \App\Models\Asset::class)
                       <li{!! (Request::query('Deleted') ? ' class="active"' : '') !!}>
@@ -511,43 +508,12 @@
                 </ul>
               </li>
               @endcan
-              @can('view', \App\Models\License::class)
-              <li{!! (Request::is('licenses*') ? ' class="active"' : '') !!}>
-                  <a href="{{ route('licenses.index') }}">
-                    <i class="fa fa-floppy-o"></i>
-                    <span>{{ trans('general.licenses') }}</span>
-                  </a>
-              </li>
-              @endcan
-              @can('index', \App\Models\Accessory::class)
-              <li{!! (Request::is('accessories*') ? ' class="active"' : '') !!}>
-                <a href="{{ route('accessories.index') }}">
-                  <i class="fa fa-keyboard-o"></i>
-                  <span>{{ trans('general.accessories') }}</span>
-                </a>
-              </li>
-              @endcan
-              @can('view', \App\Models\Consumable::class)
-            <li{!! (Request::is('consumables*') ? ' class="active"' : '') !!}>
-                <a href="{{ url('consumables') }}">
-                  <i class="fa fa-tint"></i>
-                  <span>{{ trans('general.consumables') }}</span>
-                </a>
-            </li>
-             @endcan
-             @can('view', \App\Models\Component::class)
-            <li{!! (Request::is('components*') ? ' class="active"' : '') !!}>
-                <a href="{{ route('components.index') }}">
-                  <i class="fa fa-hdd-o"></i>
-                  <span>{{ trans('general.components') }}</span>
-                </a>
-            </li>
-            @endcan
-            @can('view', \App\Models\PredefinedKit::class)
-                <li{!! (Request::is('kits') ? ' class="active"' : '') !!}>
-                    <a href="{{ route('kits.index') }}">
-                        <i class="fa fa-object-group"></i>
-                        <span>{{ trans('general.kits') }}</span>
+
+            @can('view', \App\Models\Floor::class)
+                <li{!! (Request::is('floors*') ? ' class="active"' : '') !!}>
+                    <a href="{{ route('floors.index') }}">
+                        <i class="fa fa-building"></i>
+                        <span>{{ trans('general.floors') }}</span>
                     </a>
                 </li>
             @endcan
@@ -715,16 +681,6 @@
                 </ul>
             </li>
             @endcan
-
-            @can('viewRequestable', \App\Models\Asset::class)
-            <li{!! (Request::is('account/requestable-assets') ? ' class="active"' : '') !!}>
-            <a href="{{ route('requestable-assets') }}">
-            <i class="fa fa-laptop"></i>
-            <span>{{ trans('admin/hardware/general.requestable') }}</span>
-            </a>
-            </li>
-            @endcan
-
 
           </ul>
         </section>

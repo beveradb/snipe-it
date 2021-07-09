@@ -8,6 +8,7 @@
         @show
       </title>
         <link rel="stylesheet" href="{{ url(mix('css/dist/all.css')) }}">
+        <link rel="stylesheet" href="{{ url('css/custom.css') }}">
 
 
         <script nonce="{{ csrf_token() }}">
@@ -57,7 +58,7 @@
           <div class="container">
               <div class="row">
                   <div class="col-lg-10 col-lg-offset-1">
-                    <h1 class="page-header">Snipe-IT Pre-Flight</h1>
+                    <h1 class="page-header">BIM Twin Pre-Flight</h1>
                   </div>
                   <div class="col-lg-11 col-lg-offset-1">
 

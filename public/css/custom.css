@@ -1,0 +1,46 @@
+
+#login-logo {
+    max-width: 300px;
+}
+
+footer.main-footer {
+    display: none;
+}
+
+.main-header {
+    height: 62px !important;
+}
+
+.content-wrapper {
+    min-height: calc(100vh - 62px) !important;
+}
+
+.navbar-brand > img, img.navbar-brand-img {
+    max-height: 60px;
+}
+
+.main-header .navbar {
+    min-height: 62px;
+}
+
+.main-header .logo {
+    height: 60px;
+}
+
+.main-header .navbar-right, .navbar-nav {
+    height: 60px;
+}
+
+.navbar-nav > li > a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    height: 60px;
+}
+
+.navbar-form {
+    padding-top: 5px;
+}
+
+.main-header .logo img {
+    filter: drop-shadow(0px 0px 2px white);
+}

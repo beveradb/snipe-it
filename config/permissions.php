@@ -179,7 +179,39 @@ return array(
             'display'    => true,
         ),
     ),
-
+    
+    'Floors' => array(
+        array(
+            'permission' => 'floors.view',
+            'label'      => 'View',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'floors.create',
+            'label'      => 'Create ',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'floors.edit',
+            'label'      => 'Edit ',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'floors.delete',
+            'label'      => 'Delete ',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'floors.checkout',
+            'label'      => 'Checkout ',
+            'note'       => '',
+            'display'    => true,
+        ),
+    ),
 
     'Licenses' => array(
         array(

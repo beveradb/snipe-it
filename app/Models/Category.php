@@ -39,7 +39,7 @@ class Category extends SnipeModel
         'name'   => 'required|min:1|max:255|unique_undeleted',
         'require_acceptance'   => 'boolean',
         'use_default_eula'   => 'boolean',
-        'category_type'   => 'required|in:asset,accessory,consumable,component,license',
+        'category_type'   => 'required|in:asset,accessory,consumable,component,floor,license',
     );
 
     /**
@@ -148,6 +148,18 @@ class Category extends SnipeModel
     }
 
     /**
+     * Establishes the category -> floors relationship
+     *
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v3.0]
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     */
+    public function floors()
+    {
+        return $this->hasMany('\App\Models\Floor');
+    }
+
+    /**
      * Get the number of items in the category
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
@@ -165,6 +177,8 @@ class Category extends SnipeModel
                 return $this->components()->count();
             case 'consumable':
                 return $this->consumables()->count();
+            case 'floor':
+                return $this->floors()->count();
             case 'license':
                 return $this->licenses()->count();
         }

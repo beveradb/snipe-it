@@ -52,6 +52,12 @@ RUN phpenmod mcrypt
 RUN phpenmod gd
 RUN phpenmod bcmath
 
+RUN sed -i 's/upload_max_filesize = .*/upload_max_filesize = 500M/' /etc/php/7.2/apache2/php.ini
+RUN sed -i 's/upload_max_filesize = .*/upload_max_filesize = 500M/' /etc/php/7.2/cli/php.ini
+
+RUN sed -i 's/post_max_size = .*/post_max_size = 500M/' /etc/php/7.2/apache2/php.ini
+RUN sed -i 's/post_max_size = .*/post_max_size = 500M/' /etc/php/7.2/cli/php.ini
+
 RUN sed -i 's/variables_order = .*/variables_order = "EGPCS"/' /etc/php/7.2/apache2/php.ini
 RUN sed -i 's/variables_order = .*/variables_order = "EGPCS"/' /etc/php/7.2/cli/php.ini
 

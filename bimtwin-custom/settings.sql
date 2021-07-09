@@ -1,0 +1,37 @@
+INSERT INTO snipe.settings (id, created_at, updated_at, user_id, per_page, site_name, qr_code, qr_text,
+                            display_asset_name, display_checkout_date, display_eol, auto_increment_assets,
+                            auto_increment_prefix, load_remote, logo, header_color, alert_email, alerts_enabled,
+                            default_eula_text, barcode_type, slack_endpoint, slack_channel, slack_botname,
+                            default_currency, custom_css, brand, ldap_enabled, ldap_server, ldap_uname, ldap_pword,
+                            ldap_basedn, ldap_filter, ldap_username_field, ldap_lname_field, ldap_fname_field,
+                            ldap_auth_filter_query, ldap_version, ldap_active_flag, ldap_emp_num, ldap_email,
+                            full_multiple_companies_support, ldap_server_cert_ignore, locale, labels_per_page,
+                            labels_width, labels_height, labels_pmargin_left, labels_pmargin_right, labels_pmargin_top,
+                            labels_pmargin_bottom, labels_display_bgutter, labels_display_sgutter, labels_fontsize,
+                            labels_pagewidth, labels_pageheight, labels_display_name, labels_display_serial,
+                            labels_display_tag, alt_barcode, alt_barcode_enabled, alert_interval, alert_threshold,
+                            email_domain, email_format, username_format, is_ad, ad_domain, ldap_port, ldap_tls,
+                            zerofill_count, ldap_pw_sync, two_factor_enabled, require_accept_signature,
+                            date_display_format, time_display_format, next_auto_tag_base, login_note, thumbnail_max_h,
+                            pwd_secure_uncommon, pwd_secure_complexity, pwd_secure_min, audit_interval,
+                            audit_warning_days, show_url_in_emails, custom_forgot_pass_url, show_alerts_in_menu,
+                            labels_display_company_name, show_archived_in_list, dashboard_message, support_footer,
+                            footer_text, modellist_displays, login_remote_user_enabled, login_common_disabled,
+                            login_remote_user_custom_logout_url, skin, show_images_in_email, admin_cc_email,
+                            labels_display_model, privacy_policy_link, version_footer, unique_serial, logo_print_assets,
+                            depreciation_method, favicon, email_logo, label_logo, show_assigned_assets,
+                            login_remote_user_header_name, ad_append_domain, saml_enabled, saml_idp_metadata,
+                            saml_attr_mapping_username, saml_forcelogin, saml_slo, saml_sp_x509cert, saml_sp_privatekey,
+                            saml_custom_settings, digit_separator)
+VALUES (1, '2021-03-09 22:58:41', '2021-03-09 22:58:53', null, 20, 'BIM Twin', null, null, null, null, null, 1, null, 1,
+        '', null, 'admin@bimtwin.ml', 1, null, 'QRCODE', null, null, null, 'GBP', '', 2, '0', null, null, null, null,
+        null, 'samaccountname', 'sn', 'givenname', 'uid=samaccountname', 3, null, null, null, 0, 0, 'en', 30, 2.62500,
+        1.00000, 0.21975, 0.21975, 0.50000, 0.50000, 0.07000, 0.05000, 9, 8.50000, 11.00000, 0, 1, 1, 'C128', 1, 30, 5,
+        'bimtwin.ml', 'filastname', 'filastname', 0, null, '389', 0, 5, 1, null, 0, 'D M d, Y', 'g:iA', 704, null, 30,
+        0, null, 8, null, null, 0, null, 1, 0, 0, null, 'on', null, 'image,category,manufacturer,model_number', 0, 0,
+        '', '', 1, null, 0, null, 'on', 0, 0, 'default', null, null, null, 0, '', 0, 0, null, null, 0, 0, null, null,
+        null, '1234.56');
+
+TRUNCATE custom_fieldsets;
+TRUNCATE custom_fields_custom_fieldsets;
+TRUNCATE custom_field_custom_fieldset;

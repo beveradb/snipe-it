@@ -247,6 +247,9 @@
             } else if (value.type == 'component') {
                 item_destination = 'components';
                 item_icon = 'fa-hdd-o';
+            } else if (value.type == 'floor') {
+                item_destination = 'floors';
+                item_icon = 'fa-building-o';
             } else if (value.type == 'consumable') {
                 item_destination = 'consumables';
                 item_icon = 'fa-tint';
@@ -344,6 +347,7 @@
         'accessories',
         'consumables',
         'components',
+        'floors',
         'locations',
         'users',
         'manufacturers',

@@ -109,17 +109,15 @@
                     importType: this.file.import_type,
                     update: false,
                     importTypes: [
-                        { id: 'asset', text: 'Assets' },
-                        { id: 'accessory', text: 'Accessories' },
-                        { id: 'consumable', text: 'Consumables' },
-                        { id: 'component', text: 'Components' },
-                        { id: 'license', text: 'Licenses' },
+                        { id: 'asset', text: 'Components' },
+                        { id: 'cobie_component', text: 'COBIE-Components' },
                         { id: 'user', text: 'Users' }
                     ],
                     statusText: null,
                 },
                 columnOptions: {
                     general: [
+                        {id: '0', text: 'Skip' },
                         {id: 'category', text: 'Category' },
                         {id: 'company', text: 'Company' },
                         {id: 'email', text: 'Email' },
@@ -139,6 +137,17 @@
                         {id: 'department', text: 'Department' },
                     ],
                     assets: [
+                        {id: 'asset_tag', text: 'Asset Tag' },
+                        {id: 'asset_model', text: 'Model Name' },
+                        {id: 'checkout_class', text: 'Checkout Type' },
+                        {id: 'checkout_location', text: 'Checkout Location' },
+                        {id: 'image', text: 'Image Filename' },
+                        {id: 'model_number', text: 'Model Number' },
+                        {id: 'full_name', text: 'Full Name' },
+                        {id: 'status', text: 'Status' },
+                        {id: 'warranty_months', text: 'Warranty Months' },
+                    ],
+                    cobie_component: [
                         {id: 'asset_tag', text: 'Asset Tag' },
                         {id: 'asset_model', text: 'Model Name' },
                         {id: 'checkout_class', text: 'Checkout Type' },
@@ -203,6 +212,11 @@
                     case 'asset':
                         return this.columnOptions.general
                             .concat(this.columnOptions.assets)
+                            .concat(this.columnOptions.customFields)
+                            .sort(sorter);
+                    case 'cobie_component':
+                        return this.columnOptions.general
+                            .concat(this.columnOptions.cobie_component)
                             .concat(this.columnOptions.customFields)
                             .sort(sorter);
 
